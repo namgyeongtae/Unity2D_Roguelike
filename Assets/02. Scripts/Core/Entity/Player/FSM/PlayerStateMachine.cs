@@ -9,12 +9,20 @@ public enum EntityStateMachineLayer
 
 public class PlayerStateMachine : MonoStateMachine<Entity>
 {
+    private PlayerController _playerController;
+
+    void Awake()
+    {
+        _playerController = GetComponent<PlayerController>();
+    }
+
     protected override void AddStates()
     {
         AddState<IdleState>((int)EntityStateMachineLayer.STATE);
         AddState<WalkState>((int)EntityStateMachineLayer.STATE);
         AddState<DashState>((int)EntityStateMachineLayer.STATE);
         AddState<DeadState>((int)EntityStateMachineLayer.STATE);
+        AddState<AttackState>((int)EntityStateMachineLayer.STATE);
 
         AddState<UpState>((int)EntityStateMachineLayer.DIR);
         AddState<DownState>((int)EntityStateMachineLayer.DIR);
@@ -29,10 +37,11 @@ public class PlayerStateMachine : MonoStateMachine<Entity>
         MakeAnyTransition<LeftState>(state => Owner.Movement.MoveDir == Vector2.left, (int)EntityStateMachineLayer.DIR);
         MakeAnyTransition<RightState>(state => Owner.Movement.MoveDir == Vector2.right, (int)EntityStateMachineLayer.DIR);
 
-        /* MakeTransition<IdleState, WalkState>(EntityState.Idle, EntityState.Walk, (int)EntityStateMachineLayer.STATE);
-        MakeTransition<WalkState, IdleState>(EntityState.Walk, EntityState.Idle, (int)EntityStateMachineLayer.STATE);
-        MakeTransition<WalkState, DashState>(EntityState.Walk, EntityState.Dash, (int)EntityStateMachineLayer.STATE);
-        MakeTransition<DashState, IdleState>(EntityState.Dash, EntityState.Idle, (int)EntityStateMachineLayer.STATE);
-        MakeTransition<DashState, DeadState>(EntityState.Dash, EntityState.Dead, (int)EntityStateMachineLayer.STATE); */
+
+        MakeTransition<IdleState, WalkState>(state => Owner.Movement.MoveDir != Vector2.zero, (int)EntityStateMachineLayer.STATE);
+        MakeTransition<WalkState, IdleState>(state => Owner.Movement.MoveDir == Vector2.zero, (int)EntityStateMachineLayer.STATE);
+        MakeTransition<AttackState, IdleState>(state => !_playerController.IsAttacking, (int)EntityStateMachineLayer.STATE);
+        
+        MakeAnyTransition<AttackState>(state => _playerController.IsAttacking, (int)EntityStateMachineLayer.STATE);
     }
 }

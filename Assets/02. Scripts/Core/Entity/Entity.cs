@@ -101,7 +101,7 @@ public class Entity : MonoBehaviour
 
         if (!Animator.HasState(0, Animator.StringToHash(clipName)))
         {
-            Debug.LogError($"Animation clip not found: {clipName}");
+            Debug.LogWarning($"Animation clip not found: {clipName}");
             return;
         }
 

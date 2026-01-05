@@ -11,7 +11,7 @@ public class WalkState : State<Entity>
 
     public override void Enter()
     {
-        
+        Entity.State = EntityState.Walk;
     }
 
     public override void Exit()

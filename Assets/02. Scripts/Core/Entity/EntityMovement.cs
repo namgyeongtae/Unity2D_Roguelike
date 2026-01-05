@@ -25,15 +25,18 @@ public class EntityMovement : MonoBehaviour
 
     public virtual void Move(Vector2 dir)
     {
+        if (_moveDir != Vector2.zero 
+            && dir != Vector2.zero 
+            && _moveDir != dir)
+            return;
+
+
         _moveDir = dir;
-
-        Debug.Log($"Move: {_moveDir}");
-
         Owner.transform.position += (Vector3)_moveDir * _moveSpeedStat.Value * Time.deltaTime;
     }
 
     public void Stop()
     {
-
+        _moveDir = Vector2.zero;
     }
 }
