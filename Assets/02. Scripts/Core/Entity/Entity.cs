@@ -24,6 +24,7 @@ public class Entity : MonoBehaviour
 
 
     [SerializeField] private EntityControlType _controlType;
+    [SerializeField] private GameObject socketPivot;
 
     public EntityControlType ControlType => _controlType;
     public bool IsPlayer => _controlType == EntityControlType.Player;
@@ -37,6 +38,7 @@ public class Entity : MonoBehaviour
     public EntityMovement Movement { get; private set; }
 
     public MonoStateMachine<Entity> StateMachine { get; private set; }
+    public GameObject SocketPivot => socketPivot;
 
     public event OnTakeDamageHandler onTakeDamage;
     public event OnDeadHandler onDead;

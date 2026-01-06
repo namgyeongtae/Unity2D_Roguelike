@@ -3,6 +3,7 @@ using UnityEngine;
 public class Weapon : MonoBehaviour
 {
     public delegate void OnEquippedHandler(Entity entity);
+    public delegate void OnAttackHandler(Vector2 direction);
 
     protected Entity owner;
     protected Animator animator;
@@ -10,9 +11,12 @@ public class Weapon : MonoBehaviour
     [SerializeField] protected Stat damageData;
 
     public event OnEquippedHandler onEquipped;
+    public event OnAttackHandler onAttack;
 
-    void Start()
+    public virtual void Setup()
     {
+        Debug.Log($"Weapon Start: {name}");
+
         animator = GetComponent<Animator>();
     }
 
@@ -23,5 +27,8 @@ public class Weapon : MonoBehaviour
         onEquipped?.Invoke(owner);
     }
 
-    public virtual void Attack(Vector2 direction) { }
+    public virtual void Attack(Vector2 direction) 
+    {
+        onAttack?.Invoke(direction);
+    }
 }

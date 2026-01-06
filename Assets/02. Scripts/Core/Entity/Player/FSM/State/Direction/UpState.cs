@@ -13,7 +13,13 @@ public class UpState : State<Entity>
     {
         _playerController.Direction = EntityDirection.Up;
     }
-    
+
+    public override void Update()
+    {
+        if (_playerController.Direction != EntityDirection.Up)
+            _playerController.Direction = EntityDirection.Up;
+    }
+
     public override void Exit()
     {
 

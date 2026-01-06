@@ -54,18 +54,12 @@ public class KeyInputController : MonoBehaviour
     {
         _commands[(actionId, phase)] = command;
     }
-
-    /* public void SetCommand(ActionId actionId, InputPhase phase, Action<Vector2> command)
-    {
-        _directionCommands[(actionId, phase)] = command;
-    } */
-
     private void Awake()
     {
-        Bind(ActionId.MoveUp, KeyCode.UpArrow);
-        Bind(ActionId.MoveDown, KeyCode.DownArrow);
-        Bind(ActionId.MoveLeft, KeyCode.LeftArrow);
-        Bind(ActionId.MoveRight, KeyCode.RightArrow);
+        Bind(ActionId.MoveUp, KeyCode.W);
+        Bind(ActionId.MoveDown, KeyCode.S);
+        Bind(ActionId.MoveLeft, KeyCode.A);
+        Bind(ActionId.MoveRight, KeyCode.D);
 
         Bind(ActionId.Attack, KeyCode.Mouse0);
         Bind(ActionId.Dash, KeyCode.LeftShift);

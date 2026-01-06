@@ -15,7 +15,13 @@ public class LeftState : State<Entity>
     {
         _playerController.Direction = EntityDirection.Left;
     }
-    
+
+    public override void Update()
+    {
+        if (_playerController.Direction != EntityDirection.Left)
+            _playerController.Direction = EntityDirection.Left;
+    }
+
     public override void Exit()
     {
         

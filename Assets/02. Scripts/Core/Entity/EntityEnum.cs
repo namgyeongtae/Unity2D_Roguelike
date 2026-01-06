@@ -1,5 +1,6 @@
 public enum EntityDirection
 {
+    None,
     Left,
     Right,
     Up,

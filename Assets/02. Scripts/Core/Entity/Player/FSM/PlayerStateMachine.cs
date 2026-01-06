@@ -40,8 +40,8 @@ public class PlayerStateMachine : MonoStateMachine<Entity>
 
         MakeTransition<IdleState, WalkState>(state => Owner.Movement.MoveDir != Vector2.zero, (int)EntityStateMachineLayer.STATE);
         MakeTransition<WalkState, IdleState>(state => Owner.Movement.MoveDir == Vector2.zero, (int)EntityStateMachineLayer.STATE);
-        // MakeTransition<AttackState, IdleState>(state => !_playerController.IsAttacking, (int)EntityStateMachineLayer.STATE);
+        MakeTransition<AttackState, IdleState>(state => !_playerController.IsAttacking, (int)EntityStateMachineLayer.STATE);
 
-        // MakeAnyTransition<AttackState>(state => _playerController.IsAttacking, (int)EntityStateMachineLayer.STATE);
+        MakeAnyTransition<AttackState>(state => _playerController.IsAttacking, (int)EntityStateMachineLayer.STATE);
     }
 }
