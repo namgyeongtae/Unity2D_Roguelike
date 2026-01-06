@@ -67,16 +67,16 @@ public class KeyInputController : MonoBehaviour
         Bind(ActionId.MoveLeft, KeyCode.LeftArrow);
         Bind(ActionId.MoveRight, KeyCode.RightArrow);
 
-        Bind(ActionId.Attack, KeyCode.LeftControl);
+        Bind(ActionId.Attack, KeyCode.Mouse0);
         Bind(ActionId.Dash, KeyCode.LeftShift);
         Bind(ActionId.Interact, KeyCode.F);
     }
 
     private void Start()
     {
-        SetCommand(ActionId.Attack, InputPhase.Down, () => Debug.Log("Attack"));
+        /* SetCommand(ActionId.Attack, InputPhase.Down, () => Debug.Log("Attack"));
         SetCommand(ActionId.Dash, InputPhase.Down, () => Debug.Log("Dash"));
-        SetCommand(ActionId.Interact, InputPhase.Down, () => Debug.Log("Interact"));
+        SetCommand(ActionId.Interact, InputPhase.Down, () => Debug.Log("Interact")); */
 
         SetCommand(ActionId.MoveUp, InputPhase.Hold, () => onDirectionInput?.Invoke(Vector2.up));
         SetCommand(ActionId.MoveDown, InputPhase.Hold, () => onDirectionInput?.Invoke(Vector2.down));
