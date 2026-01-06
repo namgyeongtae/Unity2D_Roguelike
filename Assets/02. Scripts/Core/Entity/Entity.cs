@@ -25,9 +25,6 @@ public class Entity : MonoBehaviour
 
     [SerializeField] private EntityControlType _controlType;
 
-    private EntityDirection _direction = EntityDirection.Down;
-    private EntityState _state = EntityState.Idle;
-
     public EntityControlType ControlType => _controlType;
     public bool IsPlayer => _controlType == EntityControlType.Player;
 
@@ -41,30 +38,9 @@ public class Entity : MonoBehaviour
 
     public MonoStateMachine<Entity> StateMachine { get; private set; }
 
-    public EntityDirection Direction
-    {
-        get => _direction;
-        set
-        {
-            if (_direction == value)
-                return;
+    public event OnTakeDamageHandler onTakeDamage;
+    public event OnDeadHandler onDead;
 
-            _direction = value;
-            SetAnimation(value, _state);
-        }
-    }
-    public EntityState State
-    {
-        get => _state;
-        set
-        {
-            if (_state == value)
-                return;
-
-            _state = value;
-            SetAnimation(Direction, value);
-        }
-    }
 
     private void Awake()
     {
@@ -86,25 +62,30 @@ public class Entity : MonoBehaviour
         
     }
 
-    private void SetAnimation(EntityDirection dir, EntityState state)
+    public void TakeDamage(Entity instigator, object causer, float damage)
     {
-        string direction = dir switch
-        {
-            EntityDirection.Left => "Side",
-            EntityDirection.Right => "Side",
-            EntityDirection.Up => "Up",
-            EntityDirection.Down => "Down",
-            _ => throw new System.Exception("Invalid direction")
-        };
-        
-        string clipName = $"{state}_{direction}";
-
-        if (!Animator.HasState(0, Animator.StringToHash(clipName)))
-        {
-            Debug.LogWarning($"Animation clip not found: {clipName}");
+        if (IsDead)
             return;
-        }
 
-        Animator.Play(clipName);
+        float prevValue = Stats.HPStat.DefaultValue;
+        Stats.HPStat.DefaultValue -= damage;
+
+        onTakeDamage?.Invoke(this, instigator, causer, damage);
+
+        if (Mathf.Approximately(Stats.HPStat.DefaultValue, 0f))
+            OnDead();
+    }
+
+    private void OnDead()
+    {
+        if (Movement)
+            Movement.enabled = false;
+
+        onDead?.Invoke(this);
+    }
+
+    private void OnDisable()
+    {
+        Debug.LogWarning("Entity is Disabled");
     }
 }

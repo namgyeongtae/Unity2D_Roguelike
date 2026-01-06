@@ -2,13 +2,15 @@ using UnityEngine;
 
 public class AttackState : State<Entity>
 {
+    private PlayerController _playerController;
+
     protected override void Setup()
     {
-
+        _playerController = Entity.GetComponent<PlayerController>();
     }
 
     public override void Enter()
     {
-        Entity.State = EntityState.Attack;
+        _playerController.State = EntityState.Attack;
     }
 }

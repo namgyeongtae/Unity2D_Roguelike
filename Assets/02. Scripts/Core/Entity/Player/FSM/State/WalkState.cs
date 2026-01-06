@@ -2,16 +2,16 @@ using UnityEngine;
 
 public class WalkState : State<Entity>
 {
-    private EntityMovement entityMovement;
+    private PlayerController _playerController;
 
     protected override void Setup()
     {
-        entityMovement = Entity.GetComponent<EntityMovement>();
+        _playerController = Entity.GetComponent<PlayerController>();
     }
 
     public override void Enter()
     {
-        Entity.State = EntityState.Walk;
+        _playerController.State = EntityState.Walk;
     }
 
     public override void Exit()

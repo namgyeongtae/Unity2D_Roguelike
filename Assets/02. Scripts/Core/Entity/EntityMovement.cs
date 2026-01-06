@@ -30,6 +30,7 @@ public class EntityMovement : MonoBehaviour
             && _moveDir != dir)
             return;
 
+        Debug.Log("Move");
 
         _moveDir = dir;
         Owner.transform.position += (Vector3)_moveDir * _moveSpeedStat.Value * Time.deltaTime;

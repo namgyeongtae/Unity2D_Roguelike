@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class DeadState : State<Entity>
 {
+    private PlayerController _playerController;
     protected override void Setup()
     {
 
@@ -9,7 +10,7 @@ public class DeadState : State<Entity>
 
     public override void Enter()
     {   
-        Entity.State = EntityState.Dead;
+        _playerController.State = EntityState.Dead;
     }
 
     public override void Exit()

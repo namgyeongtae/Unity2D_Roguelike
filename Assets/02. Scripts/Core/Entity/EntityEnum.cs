@@ -3,7 +3,11 @@ public enum EntityDirection
     Left,
     Right,
     Up,
-    Down
+    Down,
+    UpLeft,
+    UpRight,
+    DownLeft,
+    DownRight
 }
 
 public enum EntityState

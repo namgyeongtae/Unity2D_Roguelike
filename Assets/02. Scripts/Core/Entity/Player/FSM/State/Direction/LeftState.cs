@@ -3,17 +3,17 @@ using UnityEngine;
 public class LeftState : State<Entity>
 {
     private SpriteRenderer _spriteRenderer;
+    private PlayerController _playerController;
 
     protected override void Setup()
     {
-        _spriteRenderer = Entity.GetComponent<SpriteRenderer>();
+        _spriteRenderer = Entity.GetComponentInChildren<SpriteRenderer>();
+        _playerController = Entity.GetComponent<PlayerController>();
     }
 
     public override void Enter()
     {
-        Entity.Direction = EntityDirection.Left;
-
-        _spriteRenderer.flipX = false;
+        _playerController.Direction = EntityDirection.Left;
     }
     
     public override void Exit()

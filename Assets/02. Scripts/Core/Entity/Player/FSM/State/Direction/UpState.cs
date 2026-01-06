@@ -2,16 +2,16 @@ using UnityEngine;
 
 public class UpState : State<Entity>
 {
-    private EntityMovement entityMovement;
+    private PlayerController _playerController;
 
     protected override void Setup()
     {
-        entityMovement = Entity.GetComponent<EntityMovement>();
+        _playerController = Entity.GetComponent<PlayerController>();
     }
 
     public override void Enter()
     {
-        Entity.Direction = EntityDirection.Up;
+        _playerController.Direction = EntityDirection.Up;
     }
     
     public override void Exit()
