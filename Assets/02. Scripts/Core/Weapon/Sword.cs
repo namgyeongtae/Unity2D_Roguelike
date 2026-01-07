@@ -5,6 +5,8 @@ public class Sword : Weapon
 {
     private int swingDir = 1;
 
+    private Coroutine moveOwnerCoroutine;
+
     public override void Setup()
     {
         base.Setup();
@@ -51,7 +53,7 @@ public class Sword : Weapon
 
         yield return new WaitForSeconds(0.1f);
 
-        owner.GetComponent<PlayerController>().AttackEnd();
+        owner.GetComponent<PlayerController>().AttackEnd(direction);
     }
 
     private void UpdateSwordRotation(Vector2 direction)
@@ -64,7 +66,9 @@ public class Sword : Weapon
 
     private void MoveOwner(Vector2 direction)
     {
-        StartCoroutine(AddForceOwner(direction));
+        StopMoveOwner();
+
+        moveOwnerCoroutine = StartCoroutine(AddForceOwner(direction));
     }
 
     private IEnumerator AddForceOwner(Vector2 direction)
@@ -105,6 +109,15 @@ public class Sword : Weapon
         rb.linearDamping = originalDrag;
     }
 
+    private void StopMoveOwner()
+    {
+        if (moveOwnerCoroutine != null)
+        {
+            StopCoroutine(moveOwnerCoroutine);
+            moveOwnerCoroutine = null;
+        }
+    }
+
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Enemy"))
@@ -112,5 +125,9 @@ public class Sword : Weapon
             Entity enemy = other.gameObject.GetComponent<Entity>();
             enemy.TakeDamage(owner, this, owner.Stats.GetStat(damageData).Value);
         }
+        
+        StopMoveOwner();
+
+        moveOwnerCoroutine = StartCoroutine(AddForceOwner(owner.transform.position - other.transform.position));
     }
 }
