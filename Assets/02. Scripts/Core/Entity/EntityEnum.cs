@@ -18,6 +18,7 @@ public enum EntityState
     Run,
     Attack,
     Dash,
+    Dodge,
     Damaged,
     Dead
 }

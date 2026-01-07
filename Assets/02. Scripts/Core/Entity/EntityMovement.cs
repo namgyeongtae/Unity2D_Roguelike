@@ -23,7 +23,7 @@ public class EntityMovement : MonoBehaviour
         _moveSpeedStat = _moveSpeedData ? Owner.Stats.GetStat(_moveSpeedData) : null;
     }
 
-    public virtual void Move(Vector2 dir)
+    public virtual void Move(Vector2 dir, float speedMultiplier = 1.0f)
     {
         if (_moveDir != Vector2.zero 
             && dir != Vector2.zero 
@@ -31,7 +31,7 @@ public class EntityMovement : MonoBehaviour
             return;
             
         _moveDir = dir;
-        Owner.transform.position += (Vector3)_moveDir * _moveSpeedStat.Value * Time.deltaTime;
+        Owner.transform.position += (Vector3)_moveDir * _moveSpeedStat.Value * speedMultiplier * Time.deltaTime;
     }
 
     public void Stop()

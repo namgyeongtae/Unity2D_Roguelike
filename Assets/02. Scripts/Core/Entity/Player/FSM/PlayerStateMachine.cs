@@ -10,10 +10,12 @@ public enum EntityStateMachineLayer
 public class PlayerStateMachine : MonoStateMachine<Entity>
 {
     private PlayerController _playerController;
+    private PlayerMovement _playerMovement;
 
     void Awake()
     {
         _playerController = GetComponent<PlayerController>();
+        _playerMovement = Owner.Movement as PlayerMovement;
     }
 
     protected override void AddStates()
@@ -28,6 +30,7 @@ public class PlayerStateMachine : MonoStateMachine<Entity>
         AddState<DashState>((int)EntityStateMachineLayer.STATE);
         AddState<DeadState>((int)EntityStateMachineLayer.STATE);
         AddState<AttackState>((int)EntityStateMachineLayer.STATE);
+        AddState<DodgeState>((int)EntityStateMachineLayer.STATE);
     }
 
     protected override void MakeTransitions()
@@ -41,6 +44,9 @@ public class PlayerStateMachine : MonoStateMachine<Entity>
         MakeTransition<IdleState, WalkState>(state => Owner.Movement.MoveDir != Vector2.zero, (int)EntityStateMachineLayer.STATE);
         MakeTransition<WalkState, IdleState>(state => Owner.Movement.MoveDir == Vector2.zero, (int)EntityStateMachineLayer.STATE);
         MakeTransition<AttackState, IdleState>(state => !_playerController.IsAttacking, (int)EntityStateMachineLayer.STATE);
+
+        MakeTransition<WalkState, DodgeState>(state => _playerMovement.IsDodging, (int)EntityStateMachineLayer.STATE);
+        MakeTransition<DodgeState, IdleState>(state => !_playerMovement.IsDodging, (int)EntityStateMachineLayer.STATE);
 
         MakeAnyTransition<AttackState>(state => _playerController.IsAttacking, (int)EntityStateMachineLayer.STATE);
     }

@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 public enum ActionId
 {
     MoveUp, MoveDown, MoveLeft, MoveRight,
-    Attack, Dash, Interact
+    Attack, Dash, Interact, Dodge
 }
 
 public enum InputPhase { Down, Up, Hold }
@@ -64,6 +64,7 @@ public class KeyInputController : MonoBehaviour
         Bind(ActionId.Attack, KeyCode.Mouse0);
         Bind(ActionId.Dash, KeyCode.LeftShift);
         Bind(ActionId.Interact, KeyCode.F);
+        Bind(ActionId.Dodge, KeyCode.Space);
     }
 
     private void Start()
@@ -101,10 +102,7 @@ public class KeyInputController : MonoBehaviour
 
             if (_commands.TryGetValue((pair.Key, phase), out var command))
                 command?.Invoke();
-
-            /* if (_directionCommands.TryGetValue((pair.Key, phase), out var directionCommand))
-                directionCommand?.Invoke(Vector2.zero); */
-            
+                
             break;
         }
     }

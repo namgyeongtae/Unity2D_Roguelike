@@ -122,4 +122,16 @@ public class Entity : MonoBehaviour
     
     public bool IsInState<T>(int layer) where T : State<Entity>
         => StateMachine.IsInState<T>(layer);
+
+    public void PlayAnimation(string clipName)
+    {
+        if (!Animator.HasState(0, Animator.StringToHash(clipName)))
+        {
+            Debug.LogWarning($"Animation clip not found: {clipName}");
+            return;
+        }
+
+        Animator.Play(clipName);
+    }
+    
 }
