@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour
                 return;
 
             state = value;
-            SetMoveAnimation(Direction, value);
+            SetAnimation(Direction, value);
         }
     }
 
@@ -88,8 +88,6 @@ public class PlayerController : MonoBehaviour
     {
         if (!CanAttack)
             return;
-
-        isAttacking = true;
         
         entity.SocketPivot.gameObject.SetActive(true);
 
@@ -108,6 +106,8 @@ public class PlayerController : MonoBehaviour
         {
             entity.Animator.Play("DownRightSlash");
         }
+        
+        isAttacking = true;
     }
 
     public void AttackEnd(Vector2 direction)
@@ -129,24 +129,21 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void SetMoveAnimation(EntityDirection dir, EntityState state)
+    public void SetAnimation(EntityDirection dir, EntityState state)
     {
-        if (!CanMove || (state != EntityState.Idle && state != EntityState.Walk))
-            return;
-
         if (entity == null)
             return;
 
-        string clipName = $"{state}_{dir}";
-
-        Debug.Log($"SetMoveAnimation: {clipName}");
-
-        if (!entity.Animator.HasState(0, Animator.StringToHash(clipName)))
+        switch (state)
         {
-            Debug.LogWarning($"Animation clip not found: {clipName}");
-            return;
+            case EntityState.Idle:
+            case EntityState.Walk:
+            case EntityState.Dodge:
+            {
+                string clipName = $"{state}_{dir}";
+                entity.PlayAnimation(clipName);
+                break;
+            }  
         }
-
-        entity.Animator.Play(clipName);
     }
 }

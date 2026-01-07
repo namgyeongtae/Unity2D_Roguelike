@@ -19177,6 +19177,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveSpeedData: {fileID: 11400000, guid: f318b9eb4ab8c134bac9a584ab41c2ad, type: 2}
+  _dodgeTime: 1
+  _dodgeDistance: 3
 --- !u!114 &1539286215
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20158,6 +20160,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveSpeedData: {fileID: 11400000, guid: f318b9eb4ab8c134bac9a584ab41c2ad, type: 2}
+  _dodgeTime: 1
+  _dodgeDistance: 3
 --- !u!114 &2074260721
 MonoBehaviour:
   m_ObjectHideFlags: 0
