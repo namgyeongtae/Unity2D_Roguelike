@@ -13,13 +13,12 @@ public class RightState : State<Entity>
 
     public override void Enter()
     {
-        _playerController.Direction = EntityDirection.Right;
+       _playerController.SetMoveAnimation(_playerController.Direction, _playerController.State);
     }
 
     public override void Update()
     {
-        if (_playerController.Direction != EntityDirection.Right)
-            _playerController.Direction = EntityDirection.Right;
+        
     }
     
     public override void Exit()

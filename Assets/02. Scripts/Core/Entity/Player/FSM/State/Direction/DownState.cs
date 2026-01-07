@@ -10,13 +10,12 @@ public class DownState : State<Entity>
 
     public override void Enter()
     {
-        _playerController.Direction = EntityDirection.Down;
+       _playerController.SetMoveAnimation(_playerController.Direction, _playerController.State);
     }
 
     public override void Update()
     {
-        if (_playerController.Direction != EntityDirection.Down)
-            _playerController.Direction = EntityDirection.Down;
+        
     }
 
     public override void Exit()

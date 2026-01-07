@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     private bool isAttacking = false;
     private bool isHit = false;
 
+    
     private EntityDirection direction = EntityDirection.Down;
     private EntityState state = EntityState.Idle;
 
@@ -25,7 +26,6 @@ public class PlayerController : MonoBehaviour
                 return;
 
             direction = value;
-            SetMoveAnimation(value, state);
         }
     }
     public EntityState State
@@ -44,6 +44,9 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         entity = GetComponent<Entity>();
+     
+        Debug.Log($"PlayerController Start: {name}");
+
         equippedWeapon = GetComponentInChildren<Weapon>();
         equippedWeapon.Setup();
         equippedWeapon.Equip(entity);
@@ -70,10 +73,13 @@ public class PlayerController : MonoBehaviour
     
     void Move(Vector2 dir)
     {
-        Debug.Log("Move");
-
         if (!CanMove)
             return;
+
+        if (dir.x != 0)
+            Direction = dir.x > 0 ? EntityDirection.Right : EntityDirection.Left;
+        else if (dir.y != 0)
+            Direction = dir.y > 0 ? EntityDirection.Up : EntityDirection.Down;
 
         entity.Movement?.Move(dir);
     }
@@ -97,31 +103,43 @@ public class PlayerController : MonoBehaviour
         if (attackDirection.y > 0) 
         {
             entity.Animator.Play("UpRightSlash");
-            Direction = EntityDirection.Up;
         }
         else if (attackDirection.y < 0) 
         {
             entity.Animator.Play("DownRightSlash");
-            Direction = EntityDirection.Down;
         }
     }
 
-    public void AttackEnd()
+    public void AttackEnd(Vector2 direction)
     {
         entity.SocketPivot.gameObject.SetActive(false);
 
         isAttacking = false;
+
+        float absX = Mathf.Abs(direction.x);
+        float absY = Mathf.Abs(direction.y);
+
+        if (absX > absY)
+        {
+            Direction = direction.x > 0 ? EntityDirection.Right : EntityDirection.Left;
+        }
+        else
+        {
+            Direction = direction.y > 0 ? EntityDirection.Up : EntityDirection.Down;
+        }
     }
 
-    private void SetMoveAnimation(EntityDirection dir, EntityState state)
+    public void SetMoveAnimation(EntityDirection dir, EntityState state)
     {
-        if (!CanMove)
+        if (!CanMove || (state != EntityState.Idle && state != EntityState.Walk))
             return;
 
-        if (state != EntityState.Idle && state != EntityState.Walk)
+        if (entity == null)
             return;
 
         string clipName = $"{state}_{dir}";
+
+        Debug.Log($"SetMoveAnimation: {clipName}");
 
         if (!entity.Animator.HasState(0, Animator.StringToHash(clipName)))
         {

@@ -32,10 +32,10 @@ public class PlayerStateMachine : MonoStateMachine<Entity>
 
     protected override void MakeTransitions()
     {
-        MakeAnyTransition<UpState>(state => Owner.Movement.MoveDir == Vector2.up, (int)EntityStateMachineLayer.DIR);
-        MakeAnyTransition<DownState>(state => Owner.Movement.MoveDir == Vector2.down, (int)EntityStateMachineLayer.DIR);
-        MakeAnyTransition<LeftState>(state => Owner.Movement.MoveDir == Vector2.left, (int)EntityStateMachineLayer.DIR);
-        MakeAnyTransition<RightState>(state => Owner.Movement.MoveDir == Vector2.right, (int)EntityStateMachineLayer.DIR);
+        MakeAnyTransition<UpState>(state => _playerController.Direction == EntityDirection.Up, (int)EntityStateMachineLayer.DIR);
+        MakeAnyTransition<DownState>(state => _playerController.Direction == EntityDirection.Down, (int)EntityStateMachineLayer.DIR);
+        MakeAnyTransition<LeftState>(state => _playerController.Direction == EntityDirection.Left, (int)EntityStateMachineLayer.DIR);
+        MakeAnyTransition<RightState>(state => _playerController.Direction == EntityDirection.Right, (int)EntityStateMachineLayer.DIR);
 
 
         MakeTransition<IdleState, WalkState>(state => Owner.Movement.MoveDir != Vector2.zero, (int)EntityStateMachineLayer.STATE);

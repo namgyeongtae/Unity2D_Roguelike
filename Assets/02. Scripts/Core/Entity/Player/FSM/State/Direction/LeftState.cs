@@ -13,13 +13,12 @@ public class LeftState : State<Entity>
 
     public override void Enter()
     {
-        _playerController.Direction = EntityDirection.Left;
+        _playerController.SetMoveAnimation(_playerController.Direction, _playerController.State);
     }
 
     public override void Update()
     {
-        if (_playerController.Direction != EntityDirection.Left)
-            _playerController.Direction = EntityDirection.Left;
+        
     }
 
     public override void Exit()

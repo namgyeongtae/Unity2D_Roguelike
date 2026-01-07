@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum EntityControlType
@@ -25,6 +26,8 @@ public class Entity : MonoBehaviour
 
     [SerializeField] private EntityControlType _controlType;
     [SerializeField] private GameObject socketPivot;
+
+    private Dictionary<string, Transform> socketsByName = new();
 
     public EntityControlType ControlType => _controlType;
     public bool IsPlayer => _controlType == EntityControlType.Player;
@@ -86,8 +89,37 @@ public class Entity : MonoBehaviour
         onDead?.Invoke(this);
     }
 
-    private void OnDisable()
+    private Transform GetTransformSocket(Transform root, string socketName)
     {
-        Debug.LogWarning("Entity is Disabled");
+        if (root.name == socketName)
+            return root;
+
+        foreach (Transform child in root)
+        {
+            var socket = GetTransformSocket(child, socketName);
+            if (socket)
+                return socket;
+        }
+
+        return null;
     }
+
+    public Transform GetTransformSocket(string socketName)
+    {
+        if (socketsByName.TryGetValue(socketName, out var socket))
+            return socket;
+
+        socket = GetTransformSocket(transform, socketName);
+
+        if (socket)
+            socketsByName[socketName] = socket;
+
+        return socket;
+    }
+
+    public bool IsInState<T>() where T : State<Entity>
+        => StateMachine.IsInState<T>();
+    
+    public bool IsInState<T>(int layer) where T : State<Entity>
+        => StateMachine.IsInState<T>(layer);
 }

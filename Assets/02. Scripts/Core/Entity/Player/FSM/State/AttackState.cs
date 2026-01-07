@@ -13,4 +13,9 @@ public class AttackState : State<Entity>
     {
         _playerController.State = EntityState.Attack;
     }
+
+    public override void Exit()
+    {
+        
+    }
 }

@@ -11,13 +11,12 @@ public class UpState : State<Entity>
 
     public override void Enter()
     {
-        _playerController.Direction = EntityDirection.Up;
+        _playerController.SetMoveAnimation(_playerController.Direction, _playerController.State);
     }
 
     public override void Update()
     {
-        if (_playerController.Direction != EntityDirection.Up)
-            _playerController.Direction = EntityDirection.Up;
+        
     }
 
     public override void Exit()
