@@ -32,9 +32,7 @@ public class MonoStateMachine<EntityType> : MonoBehaviour
 
         AddStates();
         MakeTransitions();
-        Debug.Log("SetupLayers");
         stateMachine.SetupLayers();
-        Debug.Log("SetupLayers done");
 
         stateMachine.onStateChanged += (_, newState, prevState, layer)
             => onStateChanged?.Invoke(stateMachine, newState, prevState, layer);

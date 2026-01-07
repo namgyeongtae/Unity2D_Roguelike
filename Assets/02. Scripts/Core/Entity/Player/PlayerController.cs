@@ -7,15 +7,17 @@ public class PlayerController : MonoBehaviour
 
     private bool isAttacking = false;
     private bool isHit = false;
-
     
     private EntityDirection direction = EntityDirection.Down;
-    private EntityState state = EntityState.Idle;
+    /* private EntityState state = EntityState.Idle; */
 
     public bool IsAttacking => isAttacking;
 
-    public bool CanMove => !isAttacking && !isHit;
-    public bool CanAttack => !isAttacking && !isHit;
+    public bool CanMove => !isAttacking && !isHit && !(entity.Movement as PlayerMovement).IsDodging;
+    public bool CanAttack => !isAttacking && !isHit && !(entity.Movement as PlayerMovement).IsDodging;
+    public bool CanDodge => entity.IsInState<WalkState>();
+
+    public Entity Entity => entity;
 
     public EntityDirection Direction
     {
@@ -28,25 +30,11 @@ public class PlayerController : MonoBehaviour
             direction = value;
         }
     }
-    public EntityState State
-    {
-        get => state;
-        set
-        {
-            if (state == value)
-                return;
-
-            state = value;
-            SetAnimation(Direction, value);
-        }
-    }
 
     void Start()
     {
         entity = GetComponent<Entity>();
      
-        Debug.Log($"PlayerController Start: {name}");
-
         equippedWeapon = GetComponentInChildren<Weapon>();
         equippedWeapon.Setup();
         equippedWeapon.Equip(entity);
@@ -69,19 +57,32 @@ public class PlayerController : MonoBehaviour
     void InstallKeyBindings()
     {
         KeyInputController.Instance.SetCommand(ActionId.Attack, InputPhase.Down, Attack);
+        KeyInputController.Instance.SetCommand(ActionId.Dodge, InputPhase.Down, Dodge);
     }
     
-    void Move(Vector2 dir)
+    public void Move(Vector2 dir)
     {
-        if (!CanMove)
+        if (dir == Vector2.zero)
+        {
+            StopMove();
             return;
+        }
 
+        if (!CanMove || (entity.Movement.MoveDir != Vector2.zero
+            && entity.Movement.MoveDir != dir))
+            return;
+        
         if (dir.x != 0)
             Direction = dir.x > 0 ? EntityDirection.Right : EntityDirection.Left;
         else if (dir.y != 0)
             Direction = dir.y > 0 ? EntityDirection.Up : EntityDirection.Down;
 
         entity.Movement?.Move(dir);
+    }
+
+    public void StopMove()
+    {
+        entity.Movement?.Stop();
     }
 
     void Attack()
@@ -129,21 +130,15 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void SetAnimation(EntityDirection dir, EntityState state)
+    void Dodge()
     {
-        if (entity == null)
+        
+        var movement = entity.Movement as PlayerMovement;
+        if (movement == null)
             return;
+        
+        Vector2 direction = movement.MoveDir;
 
-        switch (state)
-        {
-            case EntityState.Idle:
-            case EntityState.Walk:
-            case EntityState.Dodge:
-            {
-                string clipName = $"{state}_{dir}";
-                entity.PlayAnimation(clipName);
-                break;
-            }  
-        }
+        movement.Dodge(direction);
     }
 }
