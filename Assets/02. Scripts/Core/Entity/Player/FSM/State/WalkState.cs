@@ -2,20 +2,23 @@ using UnityEngine;
 
 public class WalkState : State<Entity>
 {
-    private PlayerController _playerController;
+    private PlayerController playerController;
 
     protected override void Setup()
     {
-        _playerController = Entity.GetComponent<PlayerController>();
+        playerController = Entity.GetComponent<PlayerController>();
     }
 
     public override void Enter()
     {
-        _playerController.State = EntityState.Walk;
+        Debug.Log("WalkState Enter");
+        // SetAnimation();
     }
 
-    public override void Exit()
+    public override void Update()
     {
-
+        SetAnimation();
     }
+
+    void SetAnimation() => Entity.PlayAnimation($"Walk_{playerController.Direction}");
 }

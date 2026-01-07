@@ -11,7 +11,6 @@ public class UpState : State<Entity>
 
     public override void Enter()
     {
-        _playerController.SetAnimation(_playerController.Direction, _playerController.State);
     }
 
     public override void Update()

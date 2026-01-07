@@ -2,16 +2,16 @@ using UnityEngine;
 
 public class AttackState : State<Entity>
 {
-    private PlayerController _playerController;
+    private PlayerController playerController;
 
     protected override void Setup()
     {
-        _playerController = Entity.GetComponent<PlayerController>();
+        playerController = Entity.GetComponent<PlayerController>();
     }
 
     public override void Enter()
     {
-        _playerController.State = EntityState.Attack;
+        Debug.Log("AttackState Enter");
     }
 
     public override void Exit()

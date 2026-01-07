@@ -6,13 +6,14 @@ public class DodgeState : State<Entity>
 
     protected override void Setup()
     {
-
+        _playerController = Entity.GetComponent<PlayerController>();
     }
 
     public override void Enter()
     {
-        _playerController.State = EntityState.Dodge;
-
         Entity.SocketPivot.gameObject.SetActive(false);
+        SetAnimation();
     }
+
+    void SetAnimation() => Entity.PlayAnimation($"Dodge_{_playerController.Direction}");
 }

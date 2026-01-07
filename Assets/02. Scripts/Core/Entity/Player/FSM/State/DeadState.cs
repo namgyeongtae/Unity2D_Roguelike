@@ -10,7 +10,7 @@ public class DeadState : State<Entity>
 
     public override void Enter()
     {   
-        _playerController.State = EntityState.Dead;
+        
     }
 
     public override void Exit()
