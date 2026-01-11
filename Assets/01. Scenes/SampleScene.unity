@@ -832,8 +832,10 @@ GameObject:
   m_Component:
   - component: {fileID: 805833888}
   - component: {fileID: 805833887}
+  - component: {fileID: 805833890}
+  - component: {fileID: 805833889}
   m_Layer: 0
-  m_Name: enemies-skeleton1_idle_0
+  m_Name: Skeleton_Warrior
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -909,6 +911,47 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &805833889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 805833886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0a4e98600843cf4ca05cc36fd4e05fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hpStat: {fileID: 11400000, guid: 2f279ae8383d27f4fb41a2ad00b15485, type: 2}
+  skillCostStat: {fileID: 0}
+  statOverrides:
+  - stat: {fileID: 11400000, guid: 2f279ae8383d27f4fb41a2ad00b15485, type: 2}
+    isUseOverride: 1
+    overrideDefaultValue: 20
+  - stat: {fileID: 11400000, guid: f318b9eb4ab8c134bac9a584ab41c2ad, type: 2}
+    isUseOverride: 1
+    overrideDefaultValue: 3
+  - stat: {fileID: 11400000, guid: 61f2087745a91fa4995035663645d49c, type: 2}
+    isUseOverride: 1
+    overrideDefaultValue: 5
+  - stat: {fileID: 11400000, guid: 196623590b0b46347a6881bf33e466aa, type: 2}
+    isUseOverride: 1
+    overrideDefaultValue: 2
+--- !u!114 &805833890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 805833886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: faa40bde7d743f84cb8e18d51017e03a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _controlType: 1
+  socketPivot: {fileID: 0}
 --- !u!1 &848257481
 GameObject:
   m_ObjectHideFlags: 0
@@ -19248,7 +19291,7 @@ MonoBehaviour:
   skillCostStat: {fileID: 11400000, guid: 7e39f5f353ca66644961bd94726ff7d8, type: 2}
   statOverrides:
   - stat: {fileID: 11400000, guid: 6de492ff69968d34c980a9a7af13a13d, type: 2}
-    isUseOverride: 0
+    isUseOverride: 1
     overrideDefaultValue: 0
   - stat: {fileID: 11400000, guid: f318b9eb4ab8c134bac9a584ab41c2ad, type: 2}
     isUseOverride: 0

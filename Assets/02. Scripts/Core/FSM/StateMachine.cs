@@ -84,6 +84,7 @@ public class StateMachine<EntityType>
     {
         foreach (var transition in transitions)
         {
+            // Command가 존재하거나 전환 가능하지 않은은 경우
             if (transition.TransitionCommand != StateTransition<EntityType>.kNullCommand || !transition.IsTransferable)
                 continue;
 

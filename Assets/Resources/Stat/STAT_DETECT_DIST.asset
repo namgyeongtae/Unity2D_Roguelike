@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 12c756d019a0fcc4caf1686970721735, type: 3}
-  m_Name: STAT_HP
+  m_Name: STAT_DETECT_DIST
   m_EditorClassIdentifier: 
   categories: []
   icon: {fileID: 0}
-  id: 3
-  codeName: HP
+  id: 2
+  codeName: DETECT_DIST
   displayName: 
   description: 
   isPercentType: 0
-  maxValue: 9999
+  maxValue: 50
   minValue: 0
-  defaultValue: 300
+  defaultValue: 10

@@ -29,24 +29,24 @@ public class Stats : MonoBehaviour
         if (!Owner.IsPlayer)
             return;
 
-        // ÁÂÃø »ó´Ü¿¡ ³ÐÀº Box¸¦ ±×·ÁÁÜ
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ü¿ï¿½ ï¿½ï¿½ï¿½ï¿½ Boxï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½
         GUI.Box(new Rect(2f, 2f, 250f, 250f), string.Empty);
 
-        // ¹Ú½º À­ ºÎºÐ¿¡ Player Stat Text¸¦ ¶ß¿öÁÜ
+        // ï¿½Ú½ï¿½ ï¿½ï¿½ ï¿½ÎºÐ¿ï¿½ Player Stat Textï¿½ï¿½ ï¿½ß¿ï¿½ï¿½ï¿½
         GUI.Label(new Rect(4f, 2f, 100f, 30f), "Player Stat");
 
         var textRect = new Rect(4f, 22f, 200f, 30f);
-        // Stat Áõ°¡¸¦ À§ÇÑ + ButtonÀÇ ±âÁØ À§Ä¡
+        // Stat ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ + Buttonï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡
         var plusButtonRect = new Rect(textRect.x + textRect.width, textRect.y, 20f, 20f);
-        // Stat °¨¼Ò¸¦ À§ÇÑ - ButtonÀÇ ±âÁØ À§Ä¡
+        // Stat ï¿½ï¿½ï¿½Ò¸ï¿½ ï¿½ï¿½ï¿½ï¿½ - Buttonï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡
         var minusButtonRect = plusButtonRect;
         minusButtonRect.x += 22f;
 
         foreach (var stat in stats)
         {
-            // % TypeÀÌ¸é °öÇÏ±â 100À» ÇØ¼­ 0~100À¸·Î Ãâ·Â
-            // 0.##;-0.## formatÀº ¼Ò¼ýÁ¡ 2¹øÂ°Â¥¸®±îÁö Ãâ·ÂÇÏµÇ
-            // ¾ç¼ö¸é ±×´ë·Î Ãâ·Â, À½¼ö¸é -¸¦ ºÙ¿©¼­ Ãâ·ÂÇÏ¶ó´Â °Í
+            // % Typeï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½Ï±ï¿½ 100ï¿½ï¿½ ï¿½Ø¼ï¿½ 0~100ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+            // 0.##;-0.## formatï¿½ï¿½ ï¿½Ò¼ï¿½ï¿½ï¿½ 2ï¿½ï¿½Â°Â¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ïµï¿½
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×´ï¿½ï¿½ ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ -ï¿½ï¿½ ï¿½Ù¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï¶ï¿½ï¿½ ï¿½ï¿½
             string defaultValueAsString = stat.IsPercentType ?
                 $"{stat.DefaultValue * 100f:0.##;-0.##}%" :
                 stat.DefaultValue.ToString("0.##;-0.##");
@@ -56,7 +56,7 @@ public class Stats : MonoBehaviour
                 stat.BonusValue.ToString("0.##;-0.##");
 
             GUI.Label(textRect, $"{stat.DisplayName}: {defaultValueAsString} ({bonusValueAsString})");
-            // + ButtonÀ» ´©¸£¸é Stat Áõ°¡
+            // + Buttonï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Stat ï¿½ï¿½ï¿½ï¿½
             if (GUI.Button(plusButtonRect, "+"))
             {
                 if (stat.IsPercentType)
@@ -65,7 +65,7 @@ public class Stats : MonoBehaviour
                     stat.DefaultValue += 1f;
             }
 
-            // - ButtonÀ» ´©¸£¸é Stat °¨¼Ò
+            // - Buttonï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Stat ï¿½ï¿½ï¿½ï¿½
             if (GUI.Button(minusButtonRect, "-"))
             {
                 if (stat.IsPercentType)
@@ -74,7 +74,7 @@ public class Stats : MonoBehaviour
                     stat.DefaultValue -= 1f;
             }
 
-            // ´ÙÀ½ Stat Á¤º¸ Ãâ·ÂÀ» À§ÇØ yÃàÀ¸·Î ÇÑÄ­ ³»¸²
+            // ï¿½ï¿½ï¿½ï¿½ Stat ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ yï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä­ ï¿½ï¿½ï¿½ï¿½
             textRect.y += 22f;
             plusButtonRect.y = minusButtonRect.y = textRect.y;
         }
@@ -100,13 +100,19 @@ public class Stats : MonoBehaviour
 
     public Stat GetStat(Stat stat)
     {
-        Debug.Assert(stat != null, $"Stats::GetStat - statÀº nullÀÌ µÉ ¼ö ¾ø½À´Ï´Ù.");
+        Debug.Assert(stat != null, $"Stats::GetStat - statï¿½ï¿½ nullï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
         return stats.FirstOrDefault(x => x.ID == stat.ID);
+    }
+
+    public Stat GetStat(StatId stat)
+    {
+        int targetId = (int)stat;
+        return stats.FirstOrDefault(x => x.ID == targetId);
     }
 
     public bool TryGetStat(Stat stat, out Stat outStat)
     {
-        Debug.Assert(stat != null, $"Stats::TryGetStat - statÀº nullÀÌ µÉ ¼ö ¾ø½À´Ï´Ù.");
+        Debug.Assert(stat != null, $"Stats::TryGetStat - statï¿½ï¿½ nullï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
 
         outStat = stats.FirstOrDefault(x => x.ID == stat.ID);
         return outStat != null;
@@ -117,7 +123,7 @@ public class Stats : MonoBehaviour
 
     public bool HasStat(Stat stat)
     {
-        Debug.Assert(stat != null, $"Stats::HasStat - statÀº nullÀÌ µÉ ¼ö ¾ø½À´Ï´Ù.");
+        Debug.Assert(stat != null, $"Stats::HasStat - statï¿½ï¿½ nullï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
         return stats.Any(x => x.ID == stat.ID);
     }
     #endregion

@@ -13,6 +13,13 @@ public class DodgeState : State<Entity>
     {
         Entity.SocketPivot.gameObject.SetActive(false);
         SetAnimation();
+
+        // 무적 상태임
+    }
+
+    public override void Exit()
+    {
+        // 무적 상태 해제
     }
 
     void SetAnimation() => Entity.PlayAnimation($"Dodge_{_playerController.Direction}");
