@@ -49,7 +49,7 @@ public class EnemyAI : MonoBehaviour
     {
         if (target == null)
         {
-            Debug.LogError("Target is null");
+            // Debug.LogError("Target is null");
             return false;
         }
 
@@ -60,7 +60,7 @@ public class EnemyAI : MonoBehaviour
     {
         if (target == null)
         {
-            Debug.LogError("Target is null");
+            // Debug.LogError("Target is null");
             return false;
         }
 

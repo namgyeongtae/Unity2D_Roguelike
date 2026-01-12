@@ -14,6 +14,16 @@ public class PlayerMovement : EntityMovement
 
     public float MoveSpeed => _moveSpeedStat.Value;
 
+    public override void Move(Vector2 dir, float speedMultiplier = 1)
+    {
+        if (_moveDir != Vector2.zero
+            && dir != Vector2.zero
+            && _moveDir != dir)
+            return;
+
+        base.Move(dir, speedMultiplier);
+    }
+
     public void Dodge(Vector2 dir)
     {
         StartCoroutine(DodgeUpdate(dir));
