@@ -123,7 +123,7 @@ public class Entity : MonoBehaviour
     public bool IsInState<T>(int layer) where T : State<Entity>
         => StateMachine.IsInState<T>(layer);
 
-    public void PlayAnimation(string clipName)
+    public void PlayAnimation(string clipName, bool needNormalize = false, int layer = 0, float normalizedTime = 0f)
     {
         if (!Animator.HasState(0, Animator.StringToHash(clipName)))
         {
@@ -131,7 +131,10 @@ public class Entity : MonoBehaviour
             return;
         }
 
-        Animator.Play(clipName);
+        if (needNormalize)
+            Animator.Play(clipName, layer, normalizedTime);
+        else
+            Animator.Play(clipName, layer);
     }
     
 }

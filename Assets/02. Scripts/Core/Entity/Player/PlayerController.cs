@@ -9,8 +9,6 @@ public class PlayerController : MonoBehaviour
     private bool isHit = false;
     
     private EntityDirection direction = EntityDirection.Down;
-    /* private EntityState state = EntityState.Idle; */
-
     public bool IsAttacking => isAttacking;
 
     public bool CanMove => !isAttacking && !isHit && !(entity.Movement as PlayerMovement).IsDodging;

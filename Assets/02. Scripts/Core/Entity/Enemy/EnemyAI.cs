@@ -5,10 +5,10 @@ public class EnemyAI : MonoBehaviour
     public delegate void OnTargetChangedHandler();
 
     private Entity entity;
-    private GameObject target;
+    private Entity target;
 
     public Entity Entity => entity;
-    public GameObject Target => target;
+    public Entity Target => target;
 
     public float DetectDistance => entity.Stats.GetStat(StatId.DETECT_DIST).Value;
     public float AttackDistance => entity.Stats.GetStat(StatId.ATTACK_DIST).Value;
@@ -22,23 +22,29 @@ public class EnemyAI : MonoBehaviour
 
     void Update()
     {
-
+        DetectTarget();
     }
 
     public void DetectTarget()
     {
-        if (target != null)
-            return;
-
         float detectDistance = entity.Stats.GetStat(StatId.DETECT_DIST).Value;
 
         var targetCol = Physics2D.OverlapCircle(transform.position, detectDistance, LayerMask.GetMask("Player"));
+
+        if (targetCol == null)
+        {
+            SetTarget(null);
+            Debug.Log("No target found");
+            return;
+        }
         
+        var targetEntity = targetCol.gameObject.GetComponent<Entity>() ?? targetCol.gameObject.GetComponentInParent<Entity>();
+
         if (targetCol != null)
-            SetTarget(targetCol.gameObject);
+            SetTarget(targetEntity);
     }
 
-    private void SetTarget(GameObject targetObject)
+    private void SetTarget(Entity targetObject)
     {
         target = targetObject;
 

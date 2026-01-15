@@ -43,7 +43,7 @@ public class EnemyStateMachine : MonoStateMachine<Entity>
         MakeTransition<EnemyPatrolState, EnemyTraceState>(state => enemyAI.IsTargetInDetectRange());
 
         // Trace -> Idle    : Target이 DETECT_DIST 밖에 있으면 전환 | target이 null이 되면
-        MakeTransition<EnemyTraceState, EnemyIdleState>(EnemyStateTransitionCommand.TO_IDLE_STATE, state => enemyAI.Target == null);
+        MakeTransition<EnemyTraceState, EnemyIdleState>(state => enemyAI.Target == null);
 
         // Trace -> Attack  : Target이 ATTACK_DIST 이내에 있으면 전환
         MakeTransition<EnemyTraceState, EnemyAttackState>(state => enemyAI.IsTargetInAttackRange());

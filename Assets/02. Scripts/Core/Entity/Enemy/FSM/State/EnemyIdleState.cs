@@ -8,6 +8,8 @@ public class EnemyIdleState : State<Entity>
     public override void Enter()
     {
         idleRandTime = Random.Range(1.5f, 3f);
+
+        Entity.PlayAnimation("Idle");
     }
 
     public override void Update()
@@ -16,7 +18,6 @@ public class EnemyIdleState : State<Entity>
 
         if (elapsedTime >= idleRandTime)
         {
-            Debug.Log("Change to Patrol");
             Entity.StateMachine.ExecuteCommand(EnemyStateTransitionCommand.TO_PATROL_STATE, 0);
         }
     }

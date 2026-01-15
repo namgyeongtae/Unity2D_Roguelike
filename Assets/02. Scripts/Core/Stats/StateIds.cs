@@ -7,5 +7,6 @@ public enum StatId
     DETECT_DIST,
     HP,
     MOVE_SPEED,
-    MP
+    MP,
+    ATTACK_COOL_TIME
 }
