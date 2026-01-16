@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public enum EntityControlType
@@ -23,6 +24,7 @@ public class Entity : MonoBehaviour
 
     #endregion
 
+    [SerializeField] private Category[] categories;
 
     [SerializeField] private EntityControlType _controlType;
     [SerializeField] private GameObject socketPivot;
@@ -42,6 +44,7 @@ public class Entity : MonoBehaviour
 
     public MonoStateMachine<Entity> StateMachine { get; private set; }
     public GameObject SocketPivot => socketPivot;
+    public Category[] Categories => categories;
 
     public event OnTakeDamageHandler onTakeDamage;
     public event OnDeadHandler onDead;
@@ -71,6 +74,8 @@ public class Entity : MonoBehaviour
     {
         if (IsDead)
             return;
+
+        Debug.Log($"TakeDamage: {damage}");
 
         float prevValue = Stats.HPStat.DefaultValue;
         Stats.HPStat.DefaultValue -= damage;
@@ -115,6 +120,19 @@ public class Entity : MonoBehaviour
             socketsByName[socketName] = socket;
 
         return socket;
+    }
+
+    public bool HasCategory(Category category)
+        => categories.Any(x => x.ID == category.ID);
+
+    public bool HasCategory(Category[] categories)
+    {
+        foreach (var category in categories)
+        {
+            if (HasCategory(category))
+                return true;
+        }
+        return false;
     }
 
     public bool IsInState<T>() where T : State<Entity>

@@ -7,11 +7,14 @@ public class EnemyAI : MonoBehaviour
     private Entity entity;
     private Entity target;
 
+    private bool isAttacking = false;
+
     public Entity Entity => entity;
     public Entity Target => target;
 
     public float DetectDistance => entity.Stats.GetStat(StatId.DETECT_DIST).Value;
     public float AttackDistance => entity.Stats.GetStat(StatId.ATTACK_DIST).Value;
+    public bool IsAttacking => isAttacking;
 
     public event OnTargetChangedHandler onTargetChanged;
 
@@ -34,7 +37,6 @@ public class EnemyAI : MonoBehaviour
         if (targetCol == null)
         {
             SetTarget(null);
-            Debug.Log("No target found");
             return;
         }
         
@@ -54,10 +56,7 @@ public class EnemyAI : MonoBehaviour
     public bool IsTargetInDetectRange()
     {
         if (target == null)
-        {
-            // Debug.LogError("Target is null");
             return false;
-        }
 
         return Vector2.Distance(transform.position, target.transform.position) <= DetectDistance;
     }
@@ -65,10 +64,7 @@ public class EnemyAI : MonoBehaviour
     public bool IsTargetInAttackRange()
     {
         if (target == null)
-        {
-            // Debug.LogError("Target is null");
             return false;
-        }
 
         return Vector2.Distance(transform.position, target.transform.position) <= AttackDistance;
     }

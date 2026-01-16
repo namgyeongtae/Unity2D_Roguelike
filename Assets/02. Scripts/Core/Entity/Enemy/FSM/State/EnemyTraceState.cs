@@ -12,6 +12,8 @@ public class EnemyTraceState : State<Entity>
     public override void Enter()
     {
         Debug.Log("Enter Trace");
+
+        Entity.PlayAnimation("Walk");
     }
 
     public override void Update()
