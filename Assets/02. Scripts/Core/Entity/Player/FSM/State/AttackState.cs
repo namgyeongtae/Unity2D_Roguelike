@@ -11,7 +11,6 @@ public class AttackState : State<Entity>
 
     public override void Enter()
     {
-        Debug.Log("AttackState Enter");
     }
 
     public override void Exit()

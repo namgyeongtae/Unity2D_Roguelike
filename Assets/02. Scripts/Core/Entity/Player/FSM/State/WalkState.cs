@@ -11,7 +11,6 @@ public class WalkState : State<Entity>
 
     public override void Enter()
     {
-        Debug.Log("WalkState Enter");
         // SetAnimation();
     }
 

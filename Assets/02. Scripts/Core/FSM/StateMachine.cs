@@ -53,7 +53,6 @@ public class StateMachine<EntityType>
     {
         foreach ((int layer, var stateDatas) in stateDatasByLayer)
         {
-            Debug.Log($"SetupLayers: {layer}");
             currentStateDataByLayer[layer] = null;
 
             var firstStateData = stateDatas.Values.First(x => x.Priority == 0);
