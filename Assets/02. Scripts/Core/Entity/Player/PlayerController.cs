@@ -236,7 +236,7 @@ public class PlayerController : MonoBehaviour
 
             currentColorIndex = (currentColorIndex + 1) % colors.Length;
 
-            yield return new WaitForSeconds(0.1f);
+            yield return null;
         }
 
         _spriteRenderer.color = originColor;

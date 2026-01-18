@@ -124,6 +124,7 @@ public class Sword : Weapon
         {
             Entity enemy = other.gameObject.GetComponent<Entity>();
             enemy.TakeDamage(owner, this, owner.Stats.GetStat(damageData).Value);
+            return;
         }
         
         StopMoveOwner();

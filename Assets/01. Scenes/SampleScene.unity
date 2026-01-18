@@ -19458,7 +19458,7 @@ MonoBehaviour:
   statOverrides:
   - stat: {fileID: 11400000, guid: 6de492ff69968d34c980a9a7af13a13d, type: 2}
     isUseOverride: 1
-    overrideDefaultValue: 0
+    overrideDefaultValue: 10
   - stat: {fileID: 11400000, guid: f318b9eb4ab8c134bac9a584ab41c2ad, type: 2}
     isUseOverride: 0
     overrideDefaultValue: 0
@@ -19959,6 +19959,7 @@ GameObject:
   - component: {fileID: 1957766166}
   - component: {fileID: 1957766168}
   - component: {fileID: 1957766169}
+  - component: {fileID: 1957766170}
   m_Layer: 6
   m_Name: Sword
   m_TagString: Untagged
@@ -20016,7 +20017,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.01632198, y: -0.21092978}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -20026,7 +20027,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.25, y: 0.25}
+  m_Size: {x: 0.39003873, y: 0.68589634}
   m_EdgeRadius: 0
 --- !u!212 &1957766167
 SpriteRenderer:
@@ -20118,6 +20119,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageData: {fileID: 11400000, guid: 6de492ff69968d34c980a9a7af13a13d, type: 2}
+--- !u!114 &1957766170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1957766164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40273b5254739ef409673d46a0979c82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1957925958
 GameObject:
   m_ObjectHideFlags: 0
