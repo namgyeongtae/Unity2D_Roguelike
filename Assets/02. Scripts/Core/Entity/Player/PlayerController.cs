@@ -8,6 +8,8 @@ public class PlayerController : MonoBehaviour
 
     private bool isAttacking = false;
     private bool isHit = false;
+
+    [SerializeField] private SpriteRenderer _spriteRenderer;
     
     private EntityDirection direction = EntityDirection.Down;
     public bool IsAttacking => isAttacking;
@@ -53,11 +55,14 @@ public class PlayerController : MonoBehaviour
         KeyInputController.Instance.onDirectionInput += Move;
 
         entity.onTakeDamage += Knockback;
+        entity.onTakeDamage += HitEffect;
     }
 
     void OnDisable()
     {
         KeyInputController.Instance.onDirectionInput -= Move;
+
+        entity.onTakeDamage -= Knockback;
     }
 
     void InstallKeyBindings()
@@ -148,6 +153,7 @@ public class PlayerController : MonoBehaviour
         movement.Dodge(direction);
     }
 
+    #region TakeDamage Action
     private void Knockback(Entity entity, Entity instigator, object causer, float damage)
     {
         if (isHit)
@@ -205,4 +211,36 @@ public class PlayerController : MonoBehaviour
         // 넉백 완료
         isHit = false;
     }
+
+    private void HitEffect(Entity entity, Entity instigator, object causer, float damage)
+    {
+        StartCoroutine(HitEffectCoroutine());
+    }
+
+    private IEnumerator HitEffectCoroutine()
+    {
+        float elapsedTime = 0;
+        float effectDuration = 0.5f;
+
+        Color originColor = _spriteRenderer.color;
+        Color targetColor = Color.red;
+
+        Color[] colors = { originColor, targetColor };
+
+        int currentColorIndex = 0;
+        while (elapsedTime <= effectDuration)
+        {
+            elapsedTime += Time.deltaTime;
+
+            _spriteRenderer.color = colors[currentColorIndex];
+
+            currentColorIndex = (currentColorIndex + 1) % colors.Length;
+
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        _spriteRenderer.color = originColor;
+    }
+
+    #endregion
 }

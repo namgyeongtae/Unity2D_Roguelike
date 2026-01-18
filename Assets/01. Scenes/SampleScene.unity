@@ -19505,6 +19505,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05486060cf27ca440a339bb39cdeea7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _spriteRenderer: {fileID: 858365824}
 --- !u!50 &1539286217
 Rigidbody2D:
   serializedVersion: 5
@@ -20578,6 +20579,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05486060cf27ca440a339bb39cdeea7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _spriteRenderer: {fileID: 0}
 --- !u!114 &2074260722
 MonoBehaviour:
   m_ObjectHideFlags: 0
