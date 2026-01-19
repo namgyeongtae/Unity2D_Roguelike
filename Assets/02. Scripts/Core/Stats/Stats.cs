@@ -14,6 +14,8 @@ public class Stats : MonoBehaviour
     [SerializeField]
     private Stat hpStat;
     [SerializeField]
+    private Stat maxHpStat;
+    [SerializeField]
     private Stat skillCostStat;
 
     [Space]
@@ -23,9 +25,12 @@ public class Stats : MonoBehaviour
     private Stat[] stats;
 
     public Entity Owner { get; private set; }
+
+    public bool IsDamageable => isDamageable;
+
     public Stat HPStat { get; private set; }
+    public Stat MaxHpStat { get; private set; }
     public Stat SkillCostStat { get; private set; }
-    public StatScaleFloat MaxHpStat { get; private set; }
     #endregion
 
     #region 6-8
@@ -93,6 +98,7 @@ public class Stats : MonoBehaviour
 
         stats = statOverrides.Select(x => x.CreateStat()).ToArray();
         HPStat = hpStat ? GetStat(hpStat) : null;
+        MaxHpStat = maxHpStat ? GetStat(maxHpStat) : null;
         SkillCostStat = skillCostStat ? GetStat(skillCostStat) : null;
     }
     

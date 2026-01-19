@@ -6,6 +6,7 @@ public class StatsDrawer : Editor
 {
     SerializedProperty isDamageableProperty;
     SerializedProperty hpStatProperty;
+    SerializedProperty maxHpStatProperty;
     SerializedProperty skillCostStatProperty;
     SerializedProperty statOverridesProperty;
 
@@ -13,6 +14,7 @@ public class StatsDrawer : Editor
     {
         isDamageableProperty = serializedObject.FindProperty("isDamageable");
         hpStatProperty = serializedObject.FindProperty("hpStat");
+        maxHpStatProperty = serializedObject.FindProperty("maxHpStat");
         skillCostStatProperty = serializedObject.FindProperty("skillCostStat");
         statOverridesProperty = serializedObject.FindProperty("statOverrides");
     }
@@ -25,11 +27,17 @@ public class StatsDrawer : Editor
 
         if (isDamageableProperty.boolValue)
         {
+            EditorGUILayout.PropertyField(maxHpStatProperty);
             EditorGUILayout.PropertyField(hpStatProperty);
+            EditorGUILayout.PropertyField(skillCostStatProperty);
+        }
+        else
+        {
             hpStatProperty.objectReferenceValue = null;
+            maxHpStatProperty.objectReferenceValue = null;
+            skillCostStatProperty.objectReferenceValue = null;
         }
         
-        EditorGUILayout.PropertyField(skillCostStatProperty);
         EditorGUILayout.PropertyField(statOverridesProperty, true);
 
         serializedObject.ApplyModifiedProperties();

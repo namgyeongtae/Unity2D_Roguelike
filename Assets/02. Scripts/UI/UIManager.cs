@@ -20,7 +20,7 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
-
+        AddPanel<UIPlayer>("UIPlayer");
     }
 
     public T AddPanel<T>(string panelName) where T : CanvasPanel
