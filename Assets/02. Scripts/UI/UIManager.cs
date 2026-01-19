@@ -2,15 +2,39 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private static UIManager instance;
+
+    public static UIManager Instance
     {
-        
+        get
+        {
+            if (instance == null)
+            {
+                instance = FindFirstObjectByType<UIManager>();
+            }
+            return instance;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    [SerializeField] private CanvasManager canvasManager;
+
+    private void Awake()
     {
-        
+
+    }
+
+    public T AddPanel<T>(string panelName) where T : CanvasPanel
+    {
+        return canvasManager.AddPanel<T>(panelName);
+    }
+
+    public void RemovePanel<T>(string panelName) where T : CanvasPanel
+    {
+        canvasManager.RemovePanel<T>(panelName);
+    }
+
+    public T GetPanel<T>(string panelName) where T : CanvasPanel
+    {
+        return canvasManager.GetPanel<T>(panelName);
     }
 }
