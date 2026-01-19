@@ -4,9 +4,13 @@ using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(Entity))]
+[System.Serializable]
 public class Stats : MonoBehaviour
 {
     #region 6-5
+
+    [SerializeField]
+    private bool isDamageable;
     [SerializeField]
     private Stat hpStat;
     [SerializeField]
@@ -21,6 +25,7 @@ public class Stats : MonoBehaviour
     public Entity Owner { get; private set; }
     public Stat HPStat { get; private set; }
     public Stat SkillCostStat { get; private set; }
+    public StatScaleFloat MaxHpStat { get; private set; }
     #endregion
 
     #region 6-8

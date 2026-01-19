@@ -63,6 +63,7 @@ public class PlayerController : MonoBehaviour
         KeyInputController.Instance.onDirectionInput -= Move;
 
         entity.onTakeDamage -= Knockback;
+        entity.onTakeDamage -= HitEffect;
     }
 
     void InstallKeyBindings()
@@ -176,17 +177,10 @@ public class PlayerController : MonoBehaviour
         // instigator와의 방향 계산 (instigator에서 플레이어로의 방향)
         Vector3 directionToPlayer = (transform.position - instigator.transform.position).normalized;
         
-        Debug.Log("instigatorPosition: " + instigator.transform.position);
-        Debug.Log("playerPosition: " + transform.position);
-        Debug.Log("directionToPlayer: " + directionToPlayer);
-
         // 목표 위치 계산
         Vector3 startPosition = transform.position;
         Vector3 targetPosition = startPosition + directionToPlayer * knockbackDistance;
         targetPosition.z = startPosition.z;
-
-        Debug.Log("startPosition: " + startPosition);
-        Debug.Log("targetPosition: " + targetPosition);
         
         // 넉백 애니메이션
         float elapsedTime = 0f;

@@ -21,6 +21,7 @@ public class Entity : MonoBehaviour
     public delegate void OnTakeDamageHandler(Entity entity, Entity instigator, object causer, float damage);
     
     public delegate void OnDeadHandler(Entity entity);
+    public delegate void OnHpChangedHandler(Entity entity, float hp, float maxHp);
 
     #endregion
 
@@ -48,7 +49,7 @@ public class Entity : MonoBehaviour
 
     public event OnTakeDamageHandler onTakeDamage;
     public event OnDeadHandler onDead;
-
+    public event OnHpChangedHandler onHpChanged;
 
     private void Awake()
     {
@@ -62,6 +63,9 @@ public class Entity : MonoBehaviour
 
         StateMachine = GetComponent<MonoStateMachine<Entity>>();
         StateMachine.Setup(this);
+
+        if (Stats.HPStat != null)
+            Stats.HPStat.onValueChanged += (stat, value, prevValue) => { onHpChanged?.Invoke(this, value, prevValue); };
     }
 
     // Update is called once per frame
