@@ -41,7 +41,6 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        
         equippedWeapon.Setup();
         equippedWeapon.Equip(entity);
 

@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 
+[System.Serializable]
 public abstract class CustomAction : ICloneable
 {
     public virtual void Start(object data) { }

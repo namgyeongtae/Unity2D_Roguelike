@@ -4,6 +4,7 @@ using System;
 using UnityEngine;
 using UnityEditor;
 using UnityEditorInternal;
+using System.Net.NetworkInformation;
 
 public static class CustomEditorUtility
 {
@@ -13,18 +14,18 @@ public static class CustomEditorUtility
 
     static CustomEditorUtility()
     {
-        // À¯´ÏÆ¼ ³»ºÎ¿¡ Á¤ÀÇµÇ¾îÀÖ´Â ShurikenModuleTitle StyleÀ» Base·Î ÇÔ
+        // ï¿½ï¿½ï¿½ï¿½Æ¼ ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½ï¿½ÇµÇ¾ï¿½ï¿½Ö´ï¿½ ShurikenModuleTitle Styleï¿½ï¿½ Baseï¿½ï¿½ ï¿½ï¿½
         titleStyle = new GUIStyle("ShurikenModuleTitle")
         {
-            // À¯´ÏÆ¼ Default LabelÀÇ font¸¦ °¡Á®¿È
+            // ï¿½ï¿½ï¿½ï¿½Æ¼ Default Labelï¿½ï¿½ fontï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             font = new GUIStyle(EditorStyles.label).font,
             fontStyle = FontStyle.Bold,
             fontSize = 14,
-            // titleÀ» ±×¸± °ø°£¿¡ ¿©À¯¸¦ ÁÜ
+            // titleï¿½ï¿½ ï¿½×¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
             border = new RectOffset(15, 7, 4, 4),
-            // ³ôÀÌ´Â 26
+            // ï¿½ï¿½ï¿½Ì´ï¿½ 26
             fixedHeight = 26f,
-            // ³»ºÎ TextÀÇ À§Ä¡¸¦ Á¶ÀıÇÔ
+            // ï¿½ï¿½ï¿½ï¿½ Textï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             contentOffset = new Vector2(20f, -2f)
         };
     }
@@ -33,37 +34,37 @@ public static class CustomEditorUtility
     #region 1-5
     public static bool DrawFoldoutTitle(string title, bool isExpanded, float space = 15f)
     {
-        // space¸¸Å­ À­ ÁÙÀ» ¶ç¿ò
+        // spaceï¿½ï¿½Å­ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         EditorGUILayout.Space(space);
 
-        // titleStyleÀÇ Á¤º¸¸¦ °¡Áö°í Inspector»ó¿¡¼­ ¿Ç¹Ù¸¥ À§Ä¡¸¦ °¡Á®¿È
+        // titleStyleï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Inspectorï¿½ó¿¡¼ï¿½ ï¿½Ç¹Ù¸ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         var rect = GUILayoutUtility.GetRect(16f, titleStyle.fixedHeight, titleStyle);
-        // TitleStyleÀ» Àû¿ë½ÃÅ² Box¸¦ ±×·ÁÁÜ
+        // TitleStyleï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Å² Boxï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½
         GUI.Box(rect, title, titleStyle);
 
-        // ÇöÀç EditorÀÇ Event¸¦ °¡Á®¿È
-        // Editor Event´Â ¸¶¿ì½º ÀÔ·Â, GUI »õ·Î ±×¸®±â(Repaint), Å°º¸µå ÀÔ·Â µî Editor »ó¿¡¼­ ÀÏ¾î³ª´Â ÀÏÀÓ
+        // ï¿½ï¿½ï¿½ï¿½ Editorï¿½ï¿½ Eventï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        // Editor Eventï¿½ï¿½ ï¿½ï¿½ï¿½ì½º ï¿½Ô·ï¿½, GUI ï¿½ï¿½ï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½(Repaint), Å°ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ ï¿½ï¿½ Editor ï¿½ó¿¡¼ï¿½ ï¿½Ï¾î³ªï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         var currentEvent = Event.current;
-        // Toggle ButtonÀÇ À§Ä¡¿Í Å©±â¸¦ Á¤ÇÔ
-        // À§Ä¡´Â ¹æ±İ ±×¸° ¹Ú½ºÀÇ ÁÂÇ¥¿¡¼­ »ìÂ¦ ¿À¸¥ÂÊ ¾Æ·¡, Áï ButtonÀÌ ÁÂ, °¡¿îµ¥ Á¤·ÄÀÌ µÈ ÇüÅÂ°¡ µÊ.
+        // Toggle Buttonï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ Å©ï¿½â¸¦ ï¿½ï¿½ï¿½ï¿½
+        // ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½×¸ï¿½ ï¿½Ú½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Â¦ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ·ï¿½, ï¿½ï¿½ Buttonï¿½ï¿½ ï¿½ï¿½, ï¿½ï¿½ï¿½îµ¥ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Â°ï¿½ ï¿½ï¿½.
         var toggleRect = new Rect(rect.x + 4f, rect.y + 4f, 13f, 13f);
 
-        // Event°¡ Repaint(=GUI¸¦ ±×¸°´Ù È¤Àº ´Ù½Ã ±×¸°´Ù)¸é ´Ü¼øÈ÷ foldout buttonÀ» º¸¿©ÁÜ
+        // Eventï¿½ï¿½ Repaint(=GUIï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½ È¤ï¿½ï¿½ ï¿½Ù½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½)ï¿½ï¿½ ï¿½Ü¼ï¿½ï¿½ï¿½ foldout buttonï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         if (currentEvent.type == EventType.Repaint)
             EditorStyles.foldout.Draw(toggleRect, false, false, isExpanded, false);
-        // Event°¡ MouseDownÀÌ°í mousePositionÀÌ rect¿Í °ãÃÄÀÖÀ¸¸é(=Mouse Pointer°¡ À§¿¡¼­ ±×·ÁÁØ Box¾È¿¡ ÀÖÀ½) Click ÆÇÁ¤
+        // Eventï¿½ï¿½ MouseDownï¿½Ì°ï¿½ mousePositionï¿½ï¿½ rectï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(=Mouse Pointerï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ Boxï¿½È¿ï¿½ ï¿½ï¿½ï¿½ï¿½) Click ï¿½ï¿½ï¿½ï¿½
         else if (currentEvent.type == EventType.MouseDown && rect.Contains(currentEvent.mousePosition))
         {
             isExpanded = !isExpanded;
-            // Use ÇÔ¼ö¸¦ »ç¿ëÇÏÁö ¾ÊÀ¸¸é ¾ÆÁ÷ Event°¡ Ã³¸®µÇÁö ¾ÊÀº °ÍÀ¸·Î ÆÇ´ÜµÇ¾î °°Àº À§Ä¡¿¡ ÀÖ´Â ´Ù¸¥ GUIµµ °°ÀÌ µ¿ÀÛµÉ ¼ö ÀÖÀ½.
-            // event Ã³¸®¸¦ ÇßÀ¸¸é Ç×»ó Use¸¦ ÅëÇØ event¿¡ ´ëÇÑ Ã³¸®¸¦ ÇßÀ½À» Unity¿¡ ¾Ë·ÁÁÖ´Â°Ô ÁÁÀ½
+            // Use ï¿½Ô¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Eventï¿½ï¿½ Ã³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç´ÜµÇ¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½Ù¸ï¿½ GUIï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ûµï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
+            // event Ã³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×»ï¿½ Useï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ eventï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Unityï¿½ï¿½ ï¿½Ë·ï¿½ï¿½Ö´Â°ï¿½ ï¿½ï¿½ï¿½ï¿½
             currentEvent.Use();
         }
 
         return isExpanded;
     }
 
-    // FoldoutTitleÀ» ±×¸²°ú µ¿½Ã¿¡ ÀÎÀÚ·Î ¹ŞÀº Dictionary¿¡ Expand »óÈ²À» ÀúÀå±îÁö ÇØÁÜ
+    // FoldoutTitleï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ã¿ï¿½ ï¿½ï¿½ï¿½Ú·ï¿½ ï¿½ï¿½ï¿½ï¿½ Dictionaryï¿½ï¿½ Expand ï¿½ï¿½È²ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public static bool DrawFoldoutTitle(IDictionary<string, bool> isFoldoutExpandedesByTitle, string title, float space = 15f)
     {
         if (!isFoldoutExpandedesByTitle.ContainsKey(title))
@@ -78,14 +79,50 @@ public static class CustomEditorUtility
     #region 3-1
     public static void DrawUnderline(float height = 1f)
     {
-        // ¸¶Áö¸·À¸·Î ±×¸° GUIÀÇ À§Ä¡¿Í Å©±â Á¤º¸¸¦ °¡Áø Rect ±¸Á¶Ã¼¸¦ °¡Á®¿È
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×¸ï¿½ GUIï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Rect ï¿½ï¿½ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         var lastRect = GUILayoutUtility.GetLastRect();
-        // rectÀÇ y°ªÀ» ÀÌÀü GUIÀÇ ³ôÀÌ¸¸Å­ ³»¸²(=Áï, y°ªÀº ÀÌÀü GUI ¹Ù·Î ¾Æ·¡¿¡ À§Ä¡ÇÏ°Ô µÊ)
+        // rectï¿½ï¿½ yï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ GUIï¿½ï¿½ ï¿½ï¿½ï¿½Ì¸ï¿½Å­ ï¿½ï¿½ï¿½ï¿½(=ï¿½ï¿½, yï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ GUI ï¿½Ù·ï¿½ ï¿½Æ·ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½Ï°ï¿½ ï¿½ï¿½)
         lastRect.y += lastRect.height;
         lastRect.height = height;
-        // rect °ªÀ» ÀÌ¿ëÇØ¼­ ÁöÁ¤µÈ À§Ä¡¿¡ heightÅ©±âÀÇ Box¸¦ ±×¸²
-        // height°¡ 1ÀÌ¶ó¸é ÀÌÀü GUI ¹Ù·Î ¾Æ·¡¿¡ Å©±â°¡ 1ÀÎ Box, Áï LineÀÌ ±×·ÁÁö°ÔµÊ
+        // rect ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¿ï¿½ï¿½Ø¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ heightÅ©ï¿½ï¿½ï¿½ï¿½ Boxï¿½ï¿½ ï¿½×¸ï¿½
+        // heightï¿½ï¿½ 1ï¿½Ì¶ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ GUI ï¿½Ù·ï¿½ ï¿½Æ·ï¿½ï¿½ï¿½ Å©ï¿½â°¡ 1ï¿½ï¿½ Box, ï¿½ï¿½ Lineï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ï¿½Ôµï¿½
         EditorGUI.DrawRect(lastRect, Color.gray);
     }
     #endregion
+
+    public static void DrawEnumToolbar(SerializedProperty enumProperty)
+    {
+        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.PrefixLabel(enumProperty.displayName);
+        enumProperty.enumValueIndex = GUILayout.Toolbar(enumProperty.enumValueIndex, enumProperty.enumDisplayNames);
+        EditorGUILayout.EndHorizontal();
+    }
+    
+    public static void DeepCopySerializeReference(SerializedProperty property)
+    {
+        // managedReferenceValueëŠ” SerializeReference Attributeë¥¼ ì ìš©í•œ ë³€ìˆ˜
+        if (property.managedReferenceValue == null)
+            return;
+        
+        property.managedReferenceValue = (property.managedReferenceValue as ICloneable).Clone();
+    }
+
+    public static void DeepCopySerializeReferenceArray(SerializedProperty property, string fieldName = "")
+    {
+        for (int i = 0; i < property.arraySize; i++)
+        {
+            // Arrayì—ì„œ Elementë¥¼ ê°€ì ¸ì˜´
+            var elementProperty = property.GetArrayElementAtIndex(i);
+            // Elementê°€ ì¼ë°˜ classë‚˜ structë¼ì„œ Element ë‚´ë¶€ì— SerializeReference ë³€ìˆ˜ê°€ ìˆì„ ìˆ˜ ìˆìœ¼ë¯€ë¡œ,
+            // fieldNameì´ Emptyê°€ ì•„ë‹ˆë¼ë©´ Elementì—ì„œ fieldName ë³€ìˆ˜ ì •ë³´ë¥¼ ì°¾ì•„ì˜´
+            if (!string.IsNullOrEmpty(fieldName))
+                elementProperty = elementProperty.FindPropertyRelative(fieldName);
+
+            if (elementProperty.managedReferenceValue == null)
+                continue;
+            
+            // ì°¾ì•„ì˜¨ ì •ë³´ë¥¼ ì´ìš©í•´ì„œ propertyì˜ managedReferenceValueì—ì„œ Clone í•¨ìˆ˜ë¥¼ ì‹¤í–‰ì‹œí‚´
+            elementProperty.managedReferenceValue = (elementProperty.managedReferenceValue as ICloneable).Clone();
+        }
+    }
 }
