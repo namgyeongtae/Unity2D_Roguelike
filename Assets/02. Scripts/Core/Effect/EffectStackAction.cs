@@ -33,17 +33,17 @@ public class EffectStackAction
     public bool IsApplicable => !isApplyOnceInLifeTime || (isApplyOnceInLifeTime && !hasEverApplied);
 
     public void Start(Effect effect, Entity user, Entity target, int level, float scale)
-        => action.Start(effect, user, target, level, scale);
+        => action?.Start(effect, user, target, level, scale);
     
     public void Apply(Effect effect, int level, Entity user, Entity target, float scale)
     {
-        action.Apply(effect, user, target, level, stack, scale);
+        action?.Apply(effect, user, target, level, stack, scale);
         hasEverApplied = true;
     }
 
     public void Release(Effect effect, int level, Entity user, Entity target, float scale)
-        => action.Release(effect, user, target, level, scale);
+        => action?.Release(effect, user, target, level, scale);
 
     public string BuildDescription(Effect effect, string baseDescription, int stackActionIndex, int effectIndex)
-        => action.BuildDescription(effect, baseDescription, stackActionIndex, stack, effectIndex);
+        => action?.BuildDescription(effect, baseDescription, stackActionIndex, stack, effectIndex);
 }

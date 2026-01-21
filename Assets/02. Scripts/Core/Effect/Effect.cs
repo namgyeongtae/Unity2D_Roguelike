@@ -20,13 +20,13 @@ public class Effect : IdentifiedObject
     [SerializeField] private EffectType type;
 
     [SerializeField] private bool isAllowDuplicate = true;
-    [SerializeField] EffectRemoveDuplicateTargetOption removeDuplicateTargetOperation;
+    [SerializeField] EffectRemoveDuplicateTargetOption removeDuplicateTargetOption;
 
     [SerializeField] private bool isShowInUI;
 
     // maxLevel이 effectDatas의 Length를 초과할 수 있는지 여부
     // 이 Option이 false면 maxLevel은 effectDatas의 Length로 고정됨
-    [SerializeField] private bool isAllowLevelExceeedDatas;
+    [SerializeField] private bool isAllowLevelExceedDatas;
     [SerializeField] private int maxLevel;
 
     // Level 별 Data, Level은 1부터 시작하고 Array의 Index는 0부터 시작하므로
@@ -54,7 +54,7 @@ public class Effect : IdentifiedObject
 
     public EffectType Type => type;
     public bool IsAllowDuplicate => isAllowDuplicate;
-    public EffectRemoveDuplicateTargetOption RemoveDuplicateTargetOperation => removeDuplicateTargetOperation;
+    public EffectRemoveDuplicateTargetOption RemoveDuplicateTargetOperation => removeDuplicateTargetOption;
 
     public bool IsShowInUI => isShowInUI;
 

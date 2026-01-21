@@ -7,8 +7,8 @@ using UnityEditorInternal;
 public class IdentifiedObjectEditor : Editor
 {
     #region 1-6
-    // SerializedProperty´Â ³»°¡ º¸°í ÀÖ´Â °´Ã¼ÀÇ public È¤Àº [SerializeField] ¾îÆ®¸®ºäÆ®¸¦ ÅëÇØ
-    // SerailizeµÈ º¯¼öµéÀ» Á¶ÀÛÇÏ±â À§ÇÑ class
+    // SerializedPropertyï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ public È¤ï¿½ï¿½ [SerializeField] ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    // Serailizeï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ class
     private SerializedProperty categoriesProperty;
     private SerializedProperty iconProperty;
     private SerializedProperty idProperty;
@@ -16,25 +16,25 @@ public class IdentifiedObjectEditor : Editor
     private SerializedProperty displayNameProperty;
     private SerializedProperty descriptionProperty;
 
-    // Inspector »ó¿¡¼­ ¼ø¼­¸¦ ÆíÁıÇÒ ¼ö ÀÖ´Â List
+    // Inspector ï¿½ó¿¡¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ List
     private ReorderableList categories;
 
-    // text¸¦ ³Ğ°Ô º¸¿©ÁÖ´Â Style(=Skin) ÁöÁ¤À» À§ÇÑ º¯¼ö
+    // textï¿½ï¿½ ï¿½Ğ°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ Style(=Skin) ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     private GUIStyle textAreaStyle;
     
-    // TitleÀÇ Foldout Expand »óÅÂ¸¦ ÀúÀåÇÏ´Â º¯¼ö
+    // Titleï¿½ï¿½ Foldout Expand ï¿½ï¿½ï¿½Â¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½
     private readonly Dictionary<string, bool> isFoldoutExpandedesByTitle = new();
     #endregion
 
     #region 1-7
     protected virtual void OnEnable()
     {
-        // Inspector¿¡¼­ descriptionÀ» ÆíÁıÇÏ´Ù°¡ ´Ù¸¥ Inspector View·Î ³Ñ¾î°¡´Â °æ¿ì¿¡,
-        // Æ÷Ä¿½º°¡ Ç®¸®Áö ¾Ê°í ÀÌÀü¿¡ ÆíÁıÇÏ´ø desription ³»¿ëÀÌ ±×´ë·Î º¸ÀÌ´Â ¹®Á¦¸¦ ÇØ°áÇÏ±âÀ§ÇØ Æ÷Ä¿½º¸¦ Ç®¾îÁÜ
+        // Inspectorï¿½ï¿½ï¿½ï¿½ descriptionï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´Ù°ï¿½ ï¿½Ù¸ï¿½ Inspector Viewï¿½ï¿½ ï¿½Ñ¾î°¡ï¿½ï¿½ ï¿½ï¿½ì¿¡,
+        // ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½ Ç®ï¿½ï¿½ï¿½ï¿½ ï¿½Ê°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ desription ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×´ï¿½ï¿½ ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø°ï¿½ï¿½Ï±ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½ Ç®ï¿½ï¿½ï¿½ï¿½
         GUIUtility.keyboardControl = 0;
 
-        // serializedObject´Â ÇöÀç ³»°¡ Editor¿¡¼­ º¸°í ÀÖ´Â IdentifiedObject¸¦ ¶æÇÔ
-        // °´Ã¼¿¡¼­ Serialize º¯¼öµéÀ» Ã£¾Æ¿È
+        // serializedObjectï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Editorï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ IdentifiedObjectï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        // ï¿½ï¿½Ã¼ï¿½ï¿½ï¿½ï¿½ Serialize ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½Æ¿ï¿½
         categoriesProperty = serializedObject.FindProperty("categories");
         iconProperty = serializedObject.FindProperty("icon");
         idProperty = serializedObject.FindProperty("id");
@@ -43,14 +43,14 @@ public class IdentifiedObjectEditor : Editor
         descriptionProperty = serializedObject.FindProperty("description");
                 
         categories = new(serializedObject, categoriesProperty);
-        // ListÀÇ Prefix LabelÀ» ¾î¶»°Ô ±×¸±Áö Á¤ÇÔ
+        // Listï¿½ï¿½ Prefix Labelï¿½ï¿½ ï¿½î¶»ï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         categories.drawHeaderCallback = rect => EditorGUI.LabelField(rect, categoriesProperty.displayName);
-        // ListÀÇ Element¸¦ ¾î¶»°Ô ±×¸±Áö Á¤ÇÔ
+        // Listï¿½ï¿½ Elementï¿½ï¿½ ï¿½î¶»ï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         categories.drawElementCallback = (rect, index, isActive, isFocused) => {
             rect = new Rect(rect.x, rect.y + 2f, rect.width, EditorGUIUtility.singleLineHeight);
-            // EditorGUILayout¿Í EditorGUIÀÇ Â÷ÀÌÁ¡
-            // EditorGUILayoutÀº GUI¸¦ ±×¸®´Â ¼ø¼­¿¡ µû¶ó À§Ä¡¸¦ ÀÚµ¿À¸·Î Á¶Á¤ÇØÁÜ
-            // EditorGUI´Â »ç¿ëÀÚ°¡ Á÷Á¢ GUI¸¦ ±×¸± À§Ä¡¸¦ ÁöÁ¤ÇØÁà¾ßÇÔ
+            // EditorGUILayoutï¿½ï¿½ EditorGUIï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            // EditorGUILayoutï¿½ï¿½ GUIï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            // EditorGUIï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ú°ï¿½ ï¿½ï¿½ï¿½ï¿½ GUIï¿½ï¿½ ï¿½×¸ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             EditorGUI.PropertyField(rect, categoriesProperty.GetArrayElementAtIndex(index), GUIContent.none);
         };
     }
@@ -59,9 +59,9 @@ public class IdentifiedObjectEditor : Editor
     {
         if (textAreaStyle == null)
         {
-            // StyleÀÇ ±âº» ¾ç½ÄÀº textArea.
+            // Styleï¿½ï¿½ ï¿½âº» ï¿½ï¿½ï¿½ï¿½ï¿½ textArea.
             textAreaStyle = new(EditorStyles.textArea);
-            // ¹®ÀÚ¿­ÀÌ TextBox ¹ÛÀ¸·Î ¸ø ºüÁ®³ª°¡°Ô ÇÔ.
+            // ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½ TextBox ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½.
             textAreaStyle.wordWrap = true;
         }
     }
@@ -75,97 +75,192 @@ public class IdentifiedObjectEditor : Editor
     {
         StyleSetup();
 
-        // °´Ã¼ÀÇ Serialize º¯¼öµéÀÇ °ªÀ» ¾÷µ¥ÀÌÆ®ÇÔ.
+        // ï¿½ï¿½Ã¼ï¿½ï¿½ Serialize ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½.
         serializedObject.Update();
 
-        // List¸¦ ±×·ÁÁÜ
+        // Listï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½
         categories.DoLayoutList();
 
         if(DrawFoldoutTitle("Infomation"))
         {
-            // (1) Áö±İºÎÅÍ ±×¸± °´Ã¼¸¦ °¡·Î·Î Á¤·ÄÇÏ¸ç, ¹è°æÀ» Å×µÎ¸® ÀÖ´Â È¸»öÀ¸·Î Ã¤¿ò(=HelpBox´Â À¯´ÏÆ¼ ³»ºÎ¿¡ Á¤ÀÇµÇ¾î ÀÖ´Â SkinÀÓ)
-            // Áß°ıÈ£´Â ÀÛ¼ºÇÒ ÇÊ¿ä´Â ¾øÁö¸¸ ¸íÈ®ÇÑ ±¸ºĞÀ» À§ÇØ ³Ö¾îÁØ °ÍÀÌ±â ¶§¹®¿¡ ½ºÅ¸ÀÏ¿¡ µû¶ó Áß°ıÈ£´Â ¾È³Ö¾îµµ µÊ.
+            // (1) ï¿½ï¿½ï¿½İºï¿½ï¿½ï¿½ ï¿½×¸ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½Î·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×µÎ¸ï¿½ ï¿½Ö´ï¿½ È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¤ï¿½ï¿½(=HelpBoxï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ¼ ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½ï¿½ÇµÇ¾ï¿½ ï¿½Ö´ï¿½ Skinï¿½ï¿½)
+            // ï¿½ß°ï¿½È£ï¿½ï¿½ ï¿½Û¼ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½È£ï¿½ï¿½ ï¿½È³Ö¾îµµ ï¿½ï¿½.
             EditorGUILayout.BeginHorizontal("HelpBox");
             {
-                //Sprite¸¦ Preview·Î º¼ ¼ö ÀÖ°Ô º¯¼ö¸¦ ±×·ÁÁÜ
+                //Spriteï¿½ï¿½ Previewï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½
                 iconProperty.objectReferenceValue = EditorGUILayout.ObjectField(GUIContent.none, iconProperty.objectReferenceValue,
                     typeof(Sprite), false, GUILayout.Width(65));
 
-                // (2) Áö±İºÎÅÍ ±×¸± °´Ã¼´Â ¼¼·Î·Î Á¤·ÄÇÑ´Ù.
-                // À§ icon º¯¼ö´Â ¿ŞÂÊ¿¡ ±×·ÁÁö°í, Áö±İºÎÅÍ ±×¸± º¯¼öµéÀº ¿À¸¥ÂÊ¿¡ ¼¼·Î·Î ±×·ÁÁü.
+                // (2) ï¿½ï¿½ï¿½İºï¿½ï¿½ï¿½ ï¿½×¸ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½Î·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
+                // ï¿½ï¿½ icon ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ê¿ï¿½ ï¿½×·ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½İºï¿½ï¿½ï¿½ ï¿½×¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ê¿ï¿½ ï¿½ï¿½ï¿½Î·ï¿½ ï¿½×·ï¿½ï¿½ï¿½.
                 EditorGUILayout.BeginVertical();
                 {
-                    // (3) Áö±İºÎÅÍ ±×¸± °´Ã¼´Â °¡·Î·Î Á¤·ÄÇÑ´Ù.
-                    // id º¯¼öÀÇ prefix(= inspector¿¡¼­ º¸ÀÌ´Â º¯¼öÀÇ ÀÌ¸§)À» µû·Î ÁöÁ¤ÇØÁÖ±â À§ÇØ º¯¼ö LineÀ» Á÷Á¢ ¸¸µë.
+                    // (3) ï¿½ï¿½ï¿½İºï¿½ï¿½ï¿½ ï¿½×¸ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½Î·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
+                    // id ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ prefix(= inspectorï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½)ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Lineï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
                     EditorGUILayout.BeginHorizontal();
                     {
-                        // º¯¼ö ÆíÁı Disable, ID´Â Database¿¡¼­ Á÷Á¢ SetÇØÁÙ °ÍÀÌ±â ¶§¹®¿¡ »ç¿ëÀÚ°¡ Á÷Á¢ ÆíÁıÇÏÁö ¸øÇÏµµ·Ï ÇÔ.
+                        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Disable, IDï¿½ï¿½ Databaseï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Setï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ú°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ïµï¿½ï¿½ï¿½ ï¿½ï¿½.
                         GUI.enabled = false;
-                        // º¯¼öÀÇ ¼±Çà ¸íÄª(Prefix) ÁöÁ¤
+                        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Äª(Prefix) ï¿½ï¿½ï¿½ï¿½
                         EditorGUILayout.PrefixLabel("ID");
-                        // id º¯¼ö¸¦ ±×¸®µÇ Prefix´Â ±×¸®Áö¾ÊÀ½(=GUIContent.none); 
+                        // id ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½ Prefixï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(=GUIContent.none); 
                         EditorGUILayout.PropertyField(idProperty, GUIContent.none);
-                        // º¯¼ö ÆíÁı Enable
+                        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Enable
                         GUI.enabled = true;
                     }
-                    // (3) °¡·Î Á¤·Ä Á¾·á
+                    // (3) ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                     EditorGUILayout.EndHorizontal();
 
-                    // Áö±İºÎÅÍ º¯¼ö°¡ ¼öÁ¤µÇ¾ú´ÂÁö °Ë»çÇÑ´Ù.
+                    // ï¿½ï¿½ï¿½İºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½ï¿½Ñ´ï¿½.
                     EditorGUI.BeginChangeCheck();
                     var prevCodeName = codeNameProperty.stringValue;
-                    // codeName º¯¼ö¸¦ ±×¸®µÇ, »ç¿ëÀÚ°¡ Enter Å°¸¦ ´©¸¦ ¶§±îÁö °ª º¯°æÀº º¸·ùÇÔ.
+                    // codeName ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½Ú°ï¿½ Enter Å°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
                     EditorGUILayout.DelayedTextField(codeNameProperty);
-                    // º¯¼ö°¡ ¼öÁ¤µÇ¾ú´ÂÁö È®ÀÎ, codeName º¯¼ö°¡ ¼öÁ¤µÇ¾ú´Ù¸é ¼öÁ¤µÈ °ªÀ¸·Î ÇöÀç °´Ã¼ÀÇ ÀÌ¸§À» ¹Ù²ãÁÜ.
+                    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½, codeName ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ï¿½Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½Ù²ï¿½ï¿½ï¿½.
                     if (EditorGUI.EndChangeCheck())
                     {
-                        // ÇöÀç °´Ã¼ÀÇ À¯´ÏÆ¼ ÇÁ·ÎÁ§Æ®»óÀÇ ÁÖ¼Ò¸¦ °¡Á®¿È.
-                        // target == IdentifiedObject, var identifiedObject = target as IdentifiecObject ÀÌ·± ½ÄÀ¸·Î »ç¿ëÇÒ ¼ö ÀÖÀ½.
+                        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¼Ò¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
+                        // target == IdentifiedObject, var identifiedObject = target as IdentifiecObject ï¿½Ì·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
                         // serializeObject.targetObject == target
                         var assetPath = AssetDatabase.GetAssetPath(target);
-                        // »õ·Î¿î ÀÌ¸§Àº '(º¯¼öÀÇ Type)_(codeName)'
+                        // ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ '(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Type)_(codeName)'
                         var newName = $"{target.GetType().Name.ToUpper()}_{codeNameProperty.stringValue}";
 
-                        // Serialize º¯¼öµéÀÇ °ª º¯È­¸¦ Àû¿ëÇÔ(=µğ½ºÅ©¿¡ ÀúÀåÇÔ)
-                        // ÀÌ ÀÛ¾÷À» ÇØÁÖÁö ¾ÊÀ¸¸é ¹Ù²ï °ªÀÌ Àû¿ëµÇÁö ¾Ê¾Æ¼­ ÀÌÀü °ªÀ¸·Î µ¹¾Æ°¨
+                        // Serialize ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(=ï¿½ï¿½Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
+                        // ï¿½ï¿½ ï¿½Û¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾Æ¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Æ°ï¿½
                         serializedObject.ApplyModifiedProperties();
 
-                        // °´Ã¼ÀÇ Project View¿¡¼­ º¸ÀÌ´Â ÀÌ¸§À» ¼öÁ¤ÇÔ. ¸¸¾à °°Àº ÀÌ¸§À» °¡Áø °´Ã¼°¡ ÀÖÀ» °æ¿ì ½ÇÆĞÇÔ.
+                        // ï¿½ï¿½Ã¼ï¿½ï¿½ Project Viewï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½. ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
                         var message = AssetDatabase.RenameAsset(assetPath, newName);
-                        // ¼º°øÇßÀ» °æ¿ì °´Ã¼ÀÇ ³»ºÎ ÀÌ¸§µµ ¹Ù²ãÁÜ. ¿ÜºÎ ÀÌ¸§°ú ³»ºÎ ÀÌ¸§ÀÌ ´Ù¸¦ ½Ã À¯´ÏÆ¼¿¡¼­ °æ°í¸¦ ¶ç¿ì°í,
-                        // ½ÇÁ¦ ÇÁ·ÎÁ§Æ®¿¡¼­µµ ¹®Á¦¸¦ ÀÏÀ¸Å³ °¡´É¼ºÀÌ ³ô±â¿¡ Ç×»ó ÀÌ¸§À» ÀÏÄ¡½ÃÄÑÁà¾ßÇÔ
+                        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½Ù²ï¿½ï¿½ï¿½. ï¿½Üºï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½Ù¸ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ¼ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½,
+                        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Å³ ï¿½ï¿½ï¿½É¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½â¿¡ ï¿½×»ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                         if (string.IsNullOrEmpty(message))
                             target.name = newName;
                         else
                             codeNameProperty.stringValue = prevCodeName;
                     }
 
-                    // displayName º¯¼ö¸¦ ±×·ÁÁÜ
+                    // displayName ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½
                     EditorGUILayout.PropertyField(displayNameProperty);
                 }
-                // (2) ¼¼·Î Á¤·Ä Á¾·á
+                // (2) ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 EditorGUILayout.EndVertical();
             }
-            // (1) °¡·Î Á¤·Ä Á¾·á
+            // (1) ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             EditorGUILayout.EndHorizontal();
 
-            // ¼¼·Î Á¤·Ä ½ÃÀÛ, ±âº»ÀûÀ¸·Î ¼¼·Î Á¤·ÄÀÌ Default Á¤·ÄÀÌ±â ¶§¹®¿¡ °¡·Î Á¤·Ä ³»ºÎ¿¡ »ç¿ëÇÏ´Â°Ô ¾Æ´Ï¶ó¸é
-            // Á÷Á¢ ¼¼·Î Á¤·ÄÀ» ÇØÁÙ ÇÊ¿ä°¡ ¾øÁö¸¸ ÀÌ °æ¿ì¿¡´Â HelpBox·Î ³»ºÎ¸¦ È¸»öÀ¸·Î Ã¤¿ì±âÀ§ÇØ Á÷Á¢ ¼¼·Î Á¤·ÄÀ» ÇÔ
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½âº»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Default ï¿½ï¿½ï¿½ï¿½ï¿½Ì±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½ï¿½ï¿½Ï´Â°ï¿½ ï¿½Æ´Ï¶ï¿½ï¿½
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ä°¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ì¿¡ï¿½ï¿½ HelpBoxï¿½ï¿½ ï¿½ï¿½ï¿½Î¸ï¿½ È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
             EditorGUILayout.BeginVertical("HelpBox");
             {
-                // DescriptionÀÌ¶ó´Â LebelÀ» ¶ç¿öÁÜ
+                // Descriptionï¿½Ì¶ï¿½ï¿½ Lebelï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
                 EditorGUILayout.LabelField("Description");
-                // TextField¸¦ ³ĞÀº ÇüÅÂ(TextArea)·Î ±×·ÁÁÜ
+                // TextFieldï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(TextArea)ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½
                 descriptionProperty.stringValue = EditorGUILayout.TextArea(descriptionProperty.stringValue,
                     textAreaStyle, GUILayout.Height(60));
             }
             EditorGUILayout.EndVertical();
-            // ¼¼·Î Á¤·Ä Á¾·á
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         }
 
-        // Serialize º¯¼öµéÀÇ °ª º¯È­¸¦ Àû¿ëÇÔ(=µğ½ºÅ©¿¡ ÀúÀåÇÔ)
-        // ÀÌ ÀÛ¾÷À» ÇØÁÖÁö ¾ÊÀ¸¸é ¹Ù²ï °ªÀÌ Àû¿ëµÇÁö ¾Ê¾Æ¼­ ÀÌÀü °ªÀ¸·Î µ¹¾Æ°¨
+        // Serialize ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(=ï¿½ï¿½Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
+        // ï¿½ï¿½ ï¿½Û¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾Æ¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Æ°ï¿½
         serializedObject.ApplyModifiedProperties();
     }
     #endregion
+
+    protected bool DrawRemovableLevelFoldout(SerializedProperty datasProperty, SerializedProperty targetProperty, 
+        int targetIndex, bool isDrawRemoveButton = true)
+    {
+        // Dataë¥¼ ì‚­ì œí–ˆëŠ”ì§€ì— ëŒ€í•œ ê²°ê³¼
+        bool isRemoveButtonClicked = false;
+
+        EditorGUILayout.BeginHorizontal();
+        {
+            GUI.color = Color.green;
+            var level = targetProperty.FindPropertyRelative("level").intValue;
+            // Dataì˜ Levelì„ ë³´ì—¬ì£¼ëŠ” Foldout GUIë¥¼ ê·¸ë ¤ì¤Œ
+            targetProperty.isExpanded = EditorGUILayout.Foldout(targetProperty.isExpanded, $"Level {level}");
+            GUI.color = Color.white;
+
+            if (isDrawRemoveButton)
+            {
+                GUI.color = Color.red;
+                if (GUILayout.Button("x", EditorStyles.miniButton, GUILayout.Width(20f)))
+                {
+                    isRemoveButtonClicked = true;
+                    // EffectDatasì—ì„œ í˜„ì¬ Dataë¥¼ Indexë¥¼ ì´ìš©í•´ ì§€ì›€
+                    datasProperty.DeleteArrayElementAtIndex(targetIndex);
+                }
+                GUI.color = Color.white;
+            }
+        }
+        EditorGUILayout.EndHorizontal();
+
+        return isRemoveButtonClicked;
+    }
+
+    protected void DrawAutoSortLevelProperty(SerializedProperty datasProperty, SerializedProperty levelProperty, 
+        int index, bool isEditable)
+    {
+        if (!isEditable)    // ê·¸ëƒ¥ level 1(index = 0) ì˜ EffectDataëŠ” ê³ ì •ì‹œí‚´. ìˆ˜ì •í•  ìˆ˜ ì—†ìŒìŒ
+        {
+            GUI.enabled = false;
+            EditorGUILayout.PropertyField(levelProperty);
+            GUI.enabled = true;
+        }
+        else
+        {
+            // Propertyê°€ ìˆ˜ì •ë˜ì—ˆëŠ”ì§€ ê°ì‹œ ì‹œì‘
+            EditorGUI.BeginChangeCheck();
+            // ìˆ˜ì • ì „ Levelì„ ê¸°ë¡í•´ë‘ 
+            var prevValue = levelProperty.intValue;
+            // levelPropertyë¥¼ Delayed ë°©ì‹ìœ¼ë¡œ ê·¸ë ¤ì¤Œ
+            // í‚¤ë³´ë“œ Enter Keyë¥¼ ëˆŒëŸ¬ì•¼ ì…ë ¥í•œ ê°’ì´ ë°˜ì˜ë¨, Enter Keyë¥¼ ëˆ„ë¥´ì§€ ì•Šê³  ë¹ ì ¸ë‚˜ê°€ë©´ ì›ë˜ ê°’ìœ¼ë¡œ ëŒì•„ì˜´.
+            EditorGUILayout.DelayedIntField(levelProperty);
+            // Propertyê°€ ìˆ˜ì •ë˜ì—ˆì„ ê²½ìš° true ë°˜í™˜
+            if (EditorGUI.EndChangeCheck())
+            {
+                if (levelProperty.intValue <= 1)
+                    levelProperty.intValue = prevValue; // 1ë³´ë‹¤ ì‘ì„ ìˆ˜ ì—†ìœ¼ë¯€ë¡œ ì›ë˜ ê°’ìœ¼ë¡œ ë˜ëŒë¦¼
+                else
+                {
+                    // EffectDatasë¥¼ ìˆœíšŒí•˜ì—¬ ê°™ì€ levelì„ ê°€ì§„ dataê°€ ì´ë¯¸ ìˆìœ¼ë©´ ìˆ˜ì • ì „ levelë¡œ ë˜ëŒë¦¼
+                    for (int i = 0; i < datasProperty.arraySize; i++)
+                    {
+                        // í™•ì¸í•´ì•¼í•˜ëŠ” Dataê°€ í˜„ì¬ Dataì™€ ë™ì¼í•˜ë‹¤ë©´ Skip
+                        if (index == i)
+                            continue;
+
+                        var element = datasProperty.GetArrayElementAtIndex(i);
+                        // Levelì´ ë˜‘ê°™ìœ¼ë©´ í˜„ì¬ Dataì˜ Levelì„ ìˆ˜ì • ì „ìœ¼ë¡œ ë˜ëŒë¦¼
+                        if (element.FindPropertyRelative("level").intValue == levelProperty.intValue)
+                        {
+                            levelProperty.intValue = prevValue;
+                            break;
+                        }
+                    }
+
+                    // Levelì´ ì •ìƒì ìœ¼ë¡œ ìˆ˜ì •ë˜ì—ˆë‹¤ë©´ ì˜¤ë¦„ì°¨ìˆœ ì •ë ¬ ì‘ì—… ì‹¤í–‰
+                    if (levelProperty.intValue != prevValue)
+                    {
+                        // í˜„ì¬ Dataì˜ Levelì´ ië²ˆì§¸ Dataì˜ Levelë³´ë‹¤ ì‘ìœ¼ë©´, í˜„ì¬ Dataë¥¼ ië²ˆì§¸ë¡œ ì˜®ê¹€
+                        // ex. 1 2 4 5 (3) => 1 2 (3) 4 5
+                        for (int moveIndex = 1; moveIndex < datasProperty.arraySize; moveIndex++)
+                        {
+                            if (moveIndex == index)
+                                continue;
+                            
+                            var element = datasProperty.GetArrayElementAtIndex(moveIndex).FindPropertyRelative("level");
+                            if (levelProperty.intValue < element.intValue || moveIndex == (datasProperty.arraySize - 1))
+                            {
+                                datasProperty.MoveArrayElement(index, moveIndex);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

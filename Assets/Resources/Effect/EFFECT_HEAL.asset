@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f05b73cdac062944ba016d0a122ab1fe, type: 3}
+  m_Name: EFFECT_HEAL
+  m_EditorClassIdentifier: 
+  categories: []
+  icon: {fileID: 0}
+  id: 0
+  codeName: HEAL
+  displayName: 
+  description: 
+  type: 1
+  isAllowDuplicate: 0
+  removeDuplicateTargetOption: 0
+  isShowInUI: 1
+  isAllowLevelExceedDatas: 0
+  maxLevel: 1
+  effectDatas:
+  - level: 1
+    maxStack: 1
+    stackActions:
+    - stack: 1
+      isReleaseOnNextApply: 0
+      isApplyOnceInLifeTime: 0
+      action:
+        rid: -2
+    action:
+      rid: 5953682200743379061
+    runningFinishOption: 0
+    isApplyAllWhenDurationExpires: 0
+    duration:
+      defaultValue: 10
+      scaleStat: {fileID: 0}
+    applyCount: 5
+    applyCycle: 1.5
+    customActions: []
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 5953682200743379061
+      type: {class: IncreaseStatAction, ns: , asm: Assembly-CSharp}
+      data:
+        stat: {fileID: 11400000, guid: 2f279ae8383d27f4fb41a2ad00b15485, type: 2}
+        defaultValue: 1
+        bonusValueStat: {fileID: 0}
+        bonusValueStatFactor: 0
+        bonusValuePerLevel: 0
+        bonusValuePerStack: 0
+        isBonusType: 0
+        isUndoOnRelease: 0
