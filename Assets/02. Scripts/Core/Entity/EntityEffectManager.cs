@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(Entity))]
@@ -31,4 +32,6 @@ public class EntityEffectManager : MonoBehaviour
         if (effect.IsApplicable)
             effect.Apply();
     }
+
+    public bool HasEffect(Effect effect) => effects.Any(x => x.ID == effect.ID);
 }

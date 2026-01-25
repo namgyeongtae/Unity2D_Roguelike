@@ -10,6 +10,6 @@ public class ItemTest : MonoBehaviour
         var clone = item.Clone() as Item;
         clone.Setup(GetComponent<Entity>());
 
-        clone.Use(GetComponent<Entity>());
+        clone.TryUseItem(GetComponent<Entity>());
     }
 }

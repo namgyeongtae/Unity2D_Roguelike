@@ -15,10 +15,21 @@ public class Item : IdentifiedObject
 
     public event UseItemHandler onUsed;
 
+
+    public ItemType GetItemType() => type;
+
     public Effect effect;
 
-    public void Use(Entity user)
+    public bool TryUseItem(Entity user)
     {
+        if (type != ItemType.Equipment && type != ItemType.Consumable)
+        {
+            Debug.LogError("Item::Use - 장비 아이템이나 소모 아이템이 아닙니다.");
+            return false;
+        }
+
+        bool isSuccess = false;
+
         if (isNeedTarget)
         {
             var realTarget = targetType == ItemTargetType.Self ? user : null;
@@ -26,7 +37,7 @@ public class Item : IdentifiedObject
             Debug.Assert(realTarget != null, "Item::Use - Target은 null일 수 없습니다.");
 
             if (realTarget == user)
-                ApplyEffect(user, realTarget);
+                isSuccess = ApplyEffect(user, realTarget);
             else
             {
                 // Target은 고르는 Action이 실행되야 함
@@ -36,6 +47,7 @@ public class Item : IdentifiedObject
         }
 
         onUsed?.Invoke(this, user);
+        return isSuccess;
     }
 
     public void Setup(Entity user)
@@ -43,12 +55,20 @@ public class Item : IdentifiedObject
         User = user;
     }
 
-    private void ApplyEffect(Entity user, Entity target)
+    private bool ApplyEffect(Entity user, Entity target)
     {
+        var effectManager = target.GetComponent<EntityEffectManager>();
+        if (effectManager.HasEffect(effect))
+        {
+            Debug.LogError("Item::ApplyEffect - 이미 적용된 Effect입니다.");
+            return false;
+        }
+
         var cloneEffect = effect.Clone() as Effect;
         cloneEffect.Setup(this, user, 1, 1f);
         cloneEffect.SetTarget(target);
 
         target.GetComponent<EntityEffectManager>().AddEffect(cloneEffect);
+        return true;
     }
 }
