@@ -164,8 +164,6 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator KnockbackCoroutine(Entity instigator)
     {
-        Debug.Log("Knockback");
-
         // 넉백 중 플래그 설정
         isHit = true;
         

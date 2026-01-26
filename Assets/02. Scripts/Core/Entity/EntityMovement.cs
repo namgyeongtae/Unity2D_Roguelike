@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class EntityMovement : MonoBehaviour
 {
-    public delegate void OnChangedMoveDirHandler();
-
     [SerializeField] protected Stat _moveSpeedData;
 
     protected Vector2 _moveDir = Vector2.zero;
@@ -13,8 +11,6 @@ public class EntityMovement : MonoBehaviour
     public Entity Owner { get; private set; }
 
     public Vector2 MoveDir => _moveDir;
-
-    public event OnChangedMoveDirHandler onChangedMoveDir;
 
     public virtual void Setup(Entity owner)
     {

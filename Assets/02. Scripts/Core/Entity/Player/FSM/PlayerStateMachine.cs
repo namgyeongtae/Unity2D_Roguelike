@@ -41,8 +41,8 @@ public class PlayerStateMachine : MonoStateMachine<Entity>
         MakeAnyTransition<RightState>(state => _playerController.Direction == EntityDirection.Right, (int)EntityStateMachineLayer.DIR);
 
 
-        MakeTransition<IdleState, WalkState>(state => Owner.Movement.MoveDir != Vector2.zero, (int)EntityStateMachineLayer.STATE);
-        MakeTransition<WalkState, IdleState>(state => Owner.Movement.MoveDir == Vector2.zero, (int)EntityStateMachineLayer.STATE);
+        MakeTransition<IdleState, WalkState>(state => _playerMovement.MoveDir != Vector2.zero, (int)EntityStateMachineLayer.STATE);
+        MakeTransition<WalkState, IdleState>(state => _playerMovement.MoveDir == Vector2.zero, (int)EntityStateMachineLayer.STATE);
         MakeTransition<AttackState, IdleState>(state => !_playerController.IsAttacking, (int)EntityStateMachineLayer.STATE);
 
         MakeTransition<WalkState, DodgeState>(state => _playerMovement.IsDodging, (int)EntityStateMachineLayer.STATE);
