@@ -929,9 +929,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0a4e98600843cf4ca05cc36fd4e05fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDamageable: 0
-  hpStat: {fileID: 0}
-  maxHpStat: {fileID: 0}
+  isDamageable: 1
+  hpStat: {fileID: 11400000, guid: 2f279ae8383d27f4fb41a2ad00b15485, type: 2}
+  maxHpStat: {fileID: 11400000, guid: d5f74280efd58934b8c1bbe67720acaf, type: 2}
   skillCostStat: {fileID: 0}
   statOverrides:
   - stat: {fileID: 11400000, guid: 2f279ae8383d27f4fb41a2ad00b15485, type: 2}
