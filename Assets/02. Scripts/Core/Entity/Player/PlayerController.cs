@@ -11,6 +11,9 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private SpriteRenderer _spriteRenderer;
     
+    [SerializeReference, SubclassSelector] 
+    private DamageAction[] _damageActions;
+    
     private EntityDirection direction = EntityDirection.Down;
     public bool IsAttacking => isAttacking;
 
@@ -53,16 +56,14 @@ public class PlayerController : MonoBehaviour
     {
         KeyInputController.Instance.onDirectionInput += Move;
 
-        entity.onTakeDamage += Knockback;
-        entity.onTakeDamage += HitEffect;
+        entity.onTakeDamage += OnTakeDamage;
     }
 
     void OnDisable()
     {
         KeyInputController.Instance.onDirectionInput -= Move;
 
-        entity.onTakeDamage -= Knockback;
-        entity.onTakeDamage -= HitEffect;
+        entity.onTakeDamage -= OnTakeDamage;
     }
 
     void InstallKeyBindings()
@@ -152,86 +153,12 @@ public class PlayerController : MonoBehaviour
 
         movement.Dodge(direction);
     }
-
-    #region TakeDamage Action
-    private void Knockback(Entity entity, Entity instigator, object causer, float damage)
+    
+    private void OnTakeDamage(Entity entity, Entity instigator, object causer, float damage)
     {
-        if (isHit)
-            return;
-
-        StartCoroutine(KnockbackCoroutine(instigator));
-    }
-
-    private IEnumerator KnockbackCoroutine(Entity instigator)
-    {
-        // 넉백 중 플래그 설정
-        isHit = true;
-        
-        // 넉백 파라미터
-        float knockbackDistance = 1f;  // 넉백 거리
-        float knockbackDuration = 0.3f; // 넉백 지속 시간
-        
-        // instigator와의 방향 계산 (instigator에서 플레이어로의 방향)
-        Vector3 directionToPlayer = (transform.position - instigator.transform.position).normalized;
-        
-        // 목표 위치 계산
-        Vector3 startPosition = transform.position;
-        Vector3 targetPosition = startPosition + directionToPlayer * knockbackDistance;
-        targetPosition.z = startPosition.z;
-        
-        // 넉백 애니메이션
-        float elapsedTime = 0f;
-        
-        while (elapsedTime < knockbackDuration)
+        foreach (var damageAction in _damageActions)
         {
-            elapsedTime += Time.deltaTime;
-            float t = elapsedTime / knockbackDuration;
-            
-            // 이징 함수 적용 (예: ease-out)
-            float easedT = 1f - Mathf.Pow(1f - t, 3f);
-            
-            // 위치 보간
-            transform.position = Vector3.Lerp(startPosition, targetPosition, easedT);
-            
-            yield return null;
+            StartCoroutine(damageAction.OnDamage(entity, instigator, causer, damage));
         }
-        
-        // 최종 위치 보정
-        transform.position = new Vector3(targetPosition.x, targetPosition.y, transform.position.z);
-        
-        // 넉백 완료
-        isHit = false;
     }
-
-    private void HitEffect(Entity entity, Entity instigator, object causer, float damage)
-    {
-        StartCoroutine(HitEffectCoroutine());
-    }
-
-    private IEnumerator HitEffectCoroutine()
-    {
-        float elapsedTime = 0;
-        float effectDuration = 0.5f;
-
-        Color originColor = _spriteRenderer.color;
-        Color targetColor = Color.red;
-
-        Color[] colors = { originColor, targetColor };
-
-        int currentColorIndex = 0;
-        while (elapsedTime <= effectDuration)
-        {
-            elapsedTime += Time.deltaTime;
-
-            _spriteRenderer.color = colors[currentColorIndex];
-
-            currentColorIndex = (currentColorIndex + 1) % colors.Length;
-
-            yield return null;
-        }
-
-        _spriteRenderer.color = originColor;
-    }
-
-    #endregion
 }
