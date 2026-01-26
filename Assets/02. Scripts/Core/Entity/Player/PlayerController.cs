@@ -1,18 +1,12 @@
 using System.Collections;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : EntityController
 {
-    private Entity entity;
     private Weapon equippedWeapon;
 
     private bool isAttacking = false;
     private bool isHit = false;
-
-    [SerializeField] private SpriteRenderer _spriteRenderer;
-    
-    [SerializeReference, SubclassSelector] 
-    private DamageAction[] _damageActions;
     
     private EntityDirection direction = EntityDirection.Down;
     public bool IsAttacking => isAttacking;
@@ -20,8 +14,6 @@ public class PlayerController : MonoBehaviour
     public bool CanMove => !isAttacking && !isHit && !(entity.Movement as PlayerMovement).IsDodging;
     public bool CanAttack => !isAttacking && !isHit && !(entity.Movement as PlayerMovement).IsDodging;
     public bool CanDodge => entity.IsInState<WalkState>();
-
-    public Entity Entity => entity;
 
     public EntityDirection Direction
     {
@@ -35,9 +27,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void Awake()
+    protected override void Awake()
     {
-        entity = GetComponent<Entity>();
+        base.Awake();
 
         equippedWeapon = GetComponentInChildren<Weapon>();
     }
@@ -52,18 +44,18 @@ public class PlayerController : MonoBehaviour
         InstallKeyBindings();
     }
 
-    void OnEnable()
+    protected override void OnEnable()
     {
-        KeyInputController.Instance.onDirectionInput += Move;
+        base.OnEnable();
 
-        entity.onTakeDamage += OnTakeDamage;
+        KeyInputController.Instance.onDirectionInput += Move;
     }
 
-    void OnDisable()
+    protected override void OnDisable()
     {
+        base.OnDisable();
+        
         KeyInputController.Instance.onDirectionInput -= Move;
-
-        entity.onTakeDamage -= OnTakeDamage;
     }
 
     void InstallKeyBindings()
@@ -144,7 +136,6 @@ public class PlayerController : MonoBehaviour
 
     void Dodge()
     {
-        
         var movement = entity.Movement as PlayerMovement;
         if (movement == null)
             return;
@@ -152,13 +143,5 @@ public class PlayerController : MonoBehaviour
         Vector2 direction = movement.MoveDir;
 
         movement.Dodge(direction);
-    }
-    
-    private void OnTakeDamage(Entity entity, Entity instigator, object causer, float damage)
-    {
-        foreach (var damageAction in _damageActions)
-        {
-            StartCoroutine(damageAction.OnDamage(entity, instigator, causer, damage));
-        }
     }
 }

@@ -540,6 +540,296 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &612620101
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 612620111}
+  - component: {fileID: 612620110}
+  - component: {fileID: 612620109}
+  - component: {fileID: 612620108}
+  - component: {fileID: 612620107}
+  - component: {fileID: 612620106}
+  - component: {fileID: 612620105}
+  - component: {fileID: 612620104}
+  - component: {fileID: 612620103}
+  - component: {fileID: 612620102}
+  m_Layer: 0
+  m_Name: Rat_Mage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!61 &612620102
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 612620101}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.73333335, y: 0.6}
+    newSize: {x: 0.22, y: 0.18}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 0.73333335, y: 0.6}
+  m_EdgeRadius: 0
+--- !u!114 &612620103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 612620101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e134e5f787f6ff64b955462cf9181124, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spriteRenderer: {fileID: 612620110}
+  _damageActions:
+  - rid: 5953682337199816833
+  - rid: 5953682337199816834
+  references:
+    version: 2
+    RefIds:
+    - rid: 5953682337199816833
+      type: {class: HitEffectAction, ns: , asm: Assembly-CSharp}
+      data:
+        _duration: 0.5
+        _targetColor: {r: 1, g: 0, b: 0, a: 1}
+    - rid: 5953682337199816834
+      type: {class: KnockbackAction, ns: , asm: Assembly-CSharp}
+      data:
+        _distance: 1
+        _duration: 0.3
+--- !u!114 &612620104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 612620101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3ce88b6181e7bb408985b80a5caaa65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackActions:
+    rid: 5953682337199816855
+  references:
+    version: 2
+    RefIds:
+    - rid: 5953682337199816855
+      type: {class: ProjectileAttackAction, ns: , asm: Assembly-CSharp}
+      data:
+        _applyType: 1
+        _projectilePrefab: {fileID: 6538123138724138899, guid: 0714d22c86bd7f942ad8005807cbb533, type: 3}
+--- !u!114 &612620105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 612620101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86d02145e1669e040bad04b7b628fb71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _moveSpeedData: {fileID: 11400000, guid: f318b9eb4ab8c134bac9a584ab41c2ad, type: 2}
+--- !u!114 &612620106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 612620101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a8a31f2cc7b4dd48a9c0bafd18ff4a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &612620107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 612620101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0a4e98600843cf4ca05cc36fd4e05fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDamageable: 1
+  hpStat: {fileID: 11400000, guid: 2f279ae8383d27f4fb41a2ad00b15485, type: 2}
+  maxHpStat: {fileID: 11400000, guid: d5f74280efd58934b8c1bbe67720acaf, type: 2}
+  skillCostStat: {fileID: 0}
+  statOverrides:
+  - stat: {fileID: 11400000, guid: 2f279ae8383d27f4fb41a2ad00b15485, type: 2}
+    isUseOverride: 1
+    overrideDefaultValue: 20
+  - stat: {fileID: 11400000, guid: f318b9eb4ab8c134bac9a584ab41c2ad, type: 2}
+    isUseOverride: 1
+    overrideDefaultValue: 0.7
+  - stat: {fileID: 11400000, guid: 61f2087745a91fa4995035663645d49c, type: 2}
+    isUseOverride: 1
+    overrideDefaultValue: 6
+  - stat: {fileID: 11400000, guid: 196623590b0b46347a6881bf33e466aa, type: 2}
+    isUseOverride: 1
+    overrideDefaultValue: 4
+  - stat: {fileID: 11400000, guid: 6de492ff69968d34c980a9a7af13a13d, type: 2}
+    isUseOverride: 1
+    overrideDefaultValue: 5
+  - stat: {fileID: 11400000, guid: 7530643129ae9fd43abc11ab24d43f4a, type: 2}
+    isUseOverride: 1
+    overrideDefaultValue: 3
+--- !u!114 &612620108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 612620101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: faa40bde7d743f84cb8e18d51017e03a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  categories:
+  - {fileID: 11400000, guid: 0b4a789228b6650478e0a49374921f8d, type: 2}
+  _controlType: 1
+  socketPivot: {fileID: 0}
+--- !u!95 &612620109
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 612620101}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a39f877191afb8b4db8c24682520366e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!212 &612620110
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 612620101}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 10
+  m_Sprite: {fileID: -8578028819533232836, guid: 3421d8cd1cc952d4c9eff33ec2a60004, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 0.22, y: 0.18}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!4 &612620111
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 612620101}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -8.18, y: 4.77, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -839,13 +1129,14 @@ GameObject:
   - component: {fileID: 805833891}
   - component: {fileID: 805833893}
   - component: {fileID: 805833895}
+  - component: {fileID: 805833896}
   m_Layer: 0
   m_Name: Skeleton_Warrior
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &805833887
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1005,6 +1296,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3ce88b6181e7bb408985b80a5caaa65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackActions:
+    rid: -2
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!95 &805833894
 Animator:
   serializedVersion: 7
@@ -1073,6 +1371,35 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.56666666, y: 0.56666666}
   m_EdgeRadius: 0
+--- !u!114 &805833896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 805833886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e134e5f787f6ff64b955462cf9181124, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spriteRenderer: {fileID: 805833887}
+  _damageActions:
+  - rid: 5953682337199816830
+  - rid: 5953682337199816831
+  references:
+    version: 2
+    RefIds:
+    - rid: 5953682337199816830
+      type: {class: KnockbackAction, ns: , asm: Assembly-CSharp}
+      data:
+        _distance: 1
+        _duration: 0.3
+    - rid: 5953682337199816831
+      type: {class: HitEffectAction, ns: , asm: Assembly-CSharp}
+      data:
+        _duration: 0.5
+        _targetColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &848257481
 GameObject:
   m_ObjectHideFlags: 0
@@ -22108,6 +22435,7 @@ SceneRoots:
   - {fileID: 369061402}
   - {fileID: 1539286207}
   - {fileID: 805833888}
+  - {fileID: 612620111}
   - {fileID: 859514827}
   - {fileID: 1653016313}
   - {fileID: 2042739812}
