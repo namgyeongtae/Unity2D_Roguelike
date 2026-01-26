@@ -2,29 +2,31 @@ using UnityEngine;
 
 public class EnemyAttackState : State<Entity>
 {
-    private float coolTime = 0f;
+    private EnemyAI enemyAI;
+    private float remainingCoolTime = 0f;
+    private float attackCoolTime = 0f;
 
     protected override void Setup()
     {
-        
+        enemyAI = Entity.GetComponent<EnemyAI>();
+
+        attackCoolTime = Entity.Stats.GetStat(StatId.ATTACK_COOL_TIME).Value;
     }
 
     public override void Enter()
     {
-        Debug.Log("Enter Attack");
-
-        coolTime = Entity.Stats.GetStat(StatId.ATTACK_COOL_TIME).Value;
+        remainingCoolTime = 0f;
     }
 
     public override void Update()
     {
-        coolTime += Time.deltaTime;
+        remainingCoolTime -= Time.deltaTime;
 
-        if (coolTime >= Entity.Stats.GetStat(StatId.ATTACK_COOL_TIME).Value)
-        {
-            Debug.Log("Attack");
-            Entity.PlayAnimation("Attack", true, 0, 0f);
-            coolTime = 0f;
+        if (remainingCoolTime <= 0f)
+        {   
+            enemyAI.Attack(enemyAI.Target, Entity.Stats.GetStat(StatId.DAMAGE).Value);
+            Debug.Log("Rat Attack");
+            remainingCoolTime = attackCoolTime;
         }
     }
 
@@ -32,6 +34,6 @@ public class EnemyAttackState : State<Entity>
     {
         Debug.Log("Exit Attack");
 
-        coolTime = 0f;
+        // remainingCoolTime = 0f;
     }
 }

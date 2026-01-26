@@ -7,6 +7,9 @@ public class EnemyAI : MonoBehaviour
     private Entity entity;
     private Entity target;
 
+    [SerializeReference, SubclassSelector]
+    private AttackAction attackActions;
+
     private bool isAttacking = false;
 
     public Entity Entity => entity;
@@ -67,5 +70,15 @@ public class EnemyAI : MonoBehaviour
             return false;
 
         return Vector2.Distance(transform.position, target.transform.position) <= AttackDistance;
+    }
+
+    public void Attack(Entity target, float damage)
+    {
+        attackActions.Attack(entity, target, damage);
+    }
+
+    public void ApplyAttack()
+    {
+        attackActions.Apply(entity, target, entity.Stats.GetStat(StatId.DAMAGE).Value);
     }
 }

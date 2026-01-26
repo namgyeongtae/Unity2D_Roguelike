@@ -16,13 +16,11 @@ public class HitEffectAction : DamageAction
 
     private IEnumerator HitEffectCoroutine(Entity entity)
     {
-        Debug.Log("HitEffectCoroutine");
-
         _spriteRenderer = entity.GetComponentInChildren<SpriteRenderer>();
 
         float elapsedTime = 0;
 
-        Color originColor = _spriteRenderer.color;
+        Color originColor = Color.white;
         Color targetColor = _targetColor;
 
         Color[] colors = { originColor, targetColor };
