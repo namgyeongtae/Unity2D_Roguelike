@@ -36,16 +36,19 @@ public class ItemEditor : IdentifiedObjectEditor
         if (!DrawFoldoutTitle("Setting"))
             return;
         
-        EditorGUILayout.BeginHorizontal();
-        {
-            EditorGUILayout.PropertyField(typeProperty);
+        /* EditorGUILayout.BeginHorizontal();
+        { */
+            //EditorGUILayout.PropertyField(typeProperty);
 
-            if (typeProperty.enumValueIndex == (int)ItemType.Equipment)
-            {
-                EditorGUILayout.PropertyField(equipmentSlotProperty);
-            }
+        typeProperty.enumValueIndex = GUILayout.Toolbar(typeProperty.enumValueIndex, typeProperty.enumDisplayNames);
+
+        if (typeProperty.enumValueIndex == (int)ItemType.Equipment)
+        {
+            // EditorGUILayout.PropertyField(equipmentSlotProperty);
+            equipmentSlotProperty.enumValueIndex = GUILayout.Toolbar(equipmentSlotProperty.enumValueIndex, equipmentSlotProperty.enumDisplayNames);
         }
-        EditorGUILayout.EndHorizontal();
+        //}
+        // EditorGUILayout.EndHorizontal();
 
         EditorGUILayout.PropertyField(isNeedTargetProperty);
 
