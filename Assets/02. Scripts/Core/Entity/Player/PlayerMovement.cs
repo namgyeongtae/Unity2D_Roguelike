@@ -50,8 +50,6 @@ public class PlayerMovement : EntityMovement
             Owner.transform.position += new Vector3(dir.x, dir.y, 0) * deltaValue;
             prevRollDist = currentRollDist;
 
-            Debug.Log($"currentRollTime: {currentRollTime}, dodgeTime: {_dodgeTime}");
-
             yield return null;
         }
 

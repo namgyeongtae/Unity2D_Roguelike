@@ -52,6 +52,7 @@ public class EnemyAI : MonoBehaviour
     private void SetTarget(Entity targetObject)
     {
         target = targetObject;
+        entity.Target = target;
 
         onTargetChanged?.Invoke();
     }

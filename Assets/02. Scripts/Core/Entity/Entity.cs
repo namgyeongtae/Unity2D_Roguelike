@@ -47,6 +47,8 @@ public class Entity : MonoBehaviour
     public GameObject SocketPivot => socketPivot;
     public Category[] Categories => categories;
 
+    public Entity Target { get; set; }
+
     public event OnTakeDamageHandler onTakeDamage;
     public event OnDeadHandler onDead;
     public event OnHpChangedHandler onHpChanged;

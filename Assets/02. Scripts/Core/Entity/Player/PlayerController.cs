@@ -60,7 +60,8 @@ public class PlayerController : EntityController
 
     void InstallKeyBindings()
     {
-        KeyInputController.Instance.SetCommand(ActionId.Attack, InputPhase.Down, Attack);
+        // KeyInputController.Instance.SetCommand(ActionId.Attack, InputPhase.Down, Attack);
+        MouseController.Instance.onLeftClick += Attack;
         KeyInputController.Instance.SetCommand(ActionId.Dodge, InputPhase.Down, Dodge);
     }
     
@@ -89,18 +90,18 @@ public class PlayerController : EntityController
         entity.Movement?.Stop();
     }
 
-    void Attack()
+    void Attack(Vector2 mousePosition)
     {
         if (!CanAttack)
             return;
         
         entity.SocketPivot.gameObject.SetActive(true);
 
-        Vector2 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 mousePosition = new Vector2(worldPosition.x, worldPosition.y);
+        Vector2 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
+        Vector2 mouseWorldPosition = new Vector2(worldPosition.x, worldPosition.y);
         Vector2 playerPosition = new Vector2(transform.position.x, transform.position.y);
 
-        Vector2 attackDirection = (mousePosition - playerPosition).normalized;
+        Vector2 attackDirection = (mouseWorldPosition - playerPosition).normalized;
         equippedWeapon.Attack(attackDirection);
 
         if (attackDirection.y > 0) 

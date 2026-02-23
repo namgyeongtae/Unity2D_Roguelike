@@ -25,7 +25,6 @@ public class EnemyAttackState : State<Entity>
         if (remainingCoolTime <= 0f)
         {   
             enemyAI.Attack(enemyAI.Target, Entity.Stats.GetStat(StatId.DAMAGE).Value);
-            Debug.Log("Rat Attack");
             remainingCoolTime = attackCoolTime;
         }
     }
