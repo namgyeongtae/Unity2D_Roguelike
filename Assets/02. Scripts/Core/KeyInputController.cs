@@ -34,6 +34,8 @@ public class KeyInputController : MonoBehaviour
 
     public event Action<Vector2> onDirectionInput;
 
+    
+
     public void Bind(ActionId actionId, KeyCode key)
     {
         if (_bindings.TryGetValue(actionId, out var existingKey))
@@ -93,6 +95,12 @@ public class KeyInputController : MonoBehaviour
         SetCommand(ActionId.MoveRight, InputPhase.Up, () => onDirectionInput?.Invoke(Vector2.zero));
 
         var inventory = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInventory>();
+
+        if (!inventory)
+        {
+            Debug.LogError("KeyInputController::Start - Inventory not found");
+            return;
+        }
 
         SetCommand(ActionId.Item0, InputPhase.Down, () => inventory.UseItem(0));
         SetCommand(ActionId.Item1, InputPhase.Down, () => inventory.UseItem(1));
